@@ -1,9 +1,9 @@
 <?php
 
+namespace event\Controller;
+
 use Model\EventEntityManager;
 use Model\EventRepository;
-
-session_start();
 
 require_once __DIR__ . '/../Model/EventRepository.php';
 require_once __DIR__ . '/../Model/EventEntityManager.php';
@@ -12,13 +12,12 @@ class HomeController
     public EventRepository $eventRepository;
     public EventEntityManager $eventEntityManager;
     public function __construct() {
-        $latte = new Latte\Engine;
         $this->eventRepository = new EventRepository();
         $this->eventEntityManager = new EventEntityManager();
     }
     public function loadEventSignup($latte): void
     {
-        $json_file = __DIR__ . '/../../user.json';
+        $json_file = __DIR__ . '/../../events.json';
 
         $events = $this->eventRepository->findAllEvents($json_file);
 
@@ -26,11 +25,9 @@ class HomeController
             if (isset($_GET["joinevent"])) {
                 $events[$_GET["joinevent"]]["joined_pers"]++;
                 $this->eventEntityManager->saveEvents($events, $json_file);
-            } else {
-                echo "<p style ='color:red'>Login if you want to join events</p>";
             }
         } else {
-            $events = [];
+            echo "<p style ='color:red'>Login if you want to join events</p>";
         }
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {

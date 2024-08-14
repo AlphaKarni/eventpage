@@ -1,8 +1,8 @@
 <?php
-yy
-use Model\UserRepository;
 
-session_start();
+namespace event\Controller;
+
+use Model\UserRepository;
 
 require_once __DIR__ . '/../Model/UserRepository.php';
 

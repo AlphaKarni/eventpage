@@ -1,9 +1,9 @@
 <?php
 
+namespace event\Controller;
+
 use Model\UserEntityManager;
 use Model\UserRepository;
-
-session_start();
 
 require_once __DIR__ . '/../Model/UserRepository.php';
 require_once __DIR__ . '/../Model/UserEntityManager.php';

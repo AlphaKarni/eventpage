@@ -1,5 +1,10 @@
 <?php declare(strict_types=1);
 
+use event\Controller\HomeController;
+use event\Controller\LoginController;
+use event\Controller\LogoutController;
+use event\Controller\RegistrationController;
+
 session_start();
 
 require_once __DIR__ . '/vendor/autoload.php';
