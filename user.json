@@ -1,0 +1,73 @@
+[
+    {
+        "username": "12",
+        "email": "123",
+        "password": "$2y$10$4zhpSVDQxx9iulmPl1BkzuHPSwQLPOV7fFlLe2xrEXAd9.TN9HkIG",
+        "joined_event": ""
+    },
+    {
+        "username": "31",
+        "email": "31",
+        "password": "$2y$10$QGCAUoUx6MEBnTEQEUe\/ae9jn2uXTnU6cG583oc9MuhvfFyFf7PHO"
+    },
+    {
+        "username": "Mustafa",
+        "email": "1",
+        "password": "$2y$10$kqRTuid0krNKUPLByDAjTuPUwqrs6byxXsBiK8k2xowV3GHyY1qmK"
+    },
+    {
+        "username": "Tim",
+        "email": "2",
+        "password": "$2y$10$WsI12YlhQFqM21GBmx5I0el7RPhNwxTkKJOgT7nR4vJZzDNSdvoeW"
+    },
+    {
+        "username": "Peter",
+        "email": "3",
+        "password": "$2y$10$3Lfxpk76QW2cDb3ZzcGPSeJldMqZ89lQceCOJuUm2wj4MSvkOcKSO"
+    },
+    {
+        "username": "5",
+        "email": "5",
+        "password": "$2y$10$mJnkadBSIumXrcWzCfNMDuZBmNb1F0E.VOJMTW6kP5h93r4lkRFfO"
+    },
+    {
+        "username": "7",
+        "email": "7",
+        "password": "$2y$10$xiqmZPEmBCBxQLfCHKT\/yuAmm5zosQAyGfQBoDNmH7axcXk\/eG4wu"
+    },
+    {
+        "username": "6",
+        "email": "6",
+        "password": "$2y$10$zFEjPET8e44\/pw3lMTtoDelzaaCIAizWQgNY22qX18nJdIBxPCl4y"
+    },
+    {
+        "username": "312312312",
+        "email": "312312312",
+        "password": "$2y$10$Z8ADTlcydqDaTioLIbeN9.fmP94JeCtv3yPUHuvmrcL5313jn3VLO"
+    },
+    {
+        "username": "7567567",
+        "email": "765756765",
+        "password": "$2y$10$Z1wSnX2Z7gBnzu0sNVkVlesugVlcj991bFgCd7uVbJ0R8A2atq0B6"
+    },
+    {
+        "username": "8",
+        "email": "8",
+        "password": "$2y$10$XJ1h7cSL3jdY3mG8eUDvUuaktlGgZ2i7KQxKB9xifablcvx1TU4oO"
+    },
+    {
+        "username": "^",
+        "email": "^",
+        "password": "$2y$10$s5eoqH2G3\/YHvOeuV8F89uIaFcq2f2YODavG1y7c2p0q8WzS0yFgG"
+    },
+    {
+        "username": "hurensohn",
+        "email": [],
+        "password": "$2y$10$IIXOWxu9fye4k7\/ClStSceVix6VEDITF4XASnSyiufFn3y8.C5ev6"
+    },
+    {
+        "username": "m",
+        "email": "m",
+        "password": "$2y$10$xhpNPA8qTAoAMpLhLQGgr.KlQRvbKLr7kfI5vvWzmsi4wN3Z5Sk6y"
+    }
+]
