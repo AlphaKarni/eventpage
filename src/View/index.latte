@@ -7,11 +7,21 @@
 <body>
 <form action="/index.php" method="POST">
 
-    <p>Event SignUp
-        {if $logged_in === true}Username: {$_SESSION['username']} <a href='?page=logout'>Logout</a>
-        {else}<a href="http://localhost:8000/?page=login">Login</a> <a href="http://localhost:8000/?page=register">Register</a>
+    <p>Event SignUp <br><br>
+        {if $logged_in === true}Username: {$_SESSION['username']}
+                <a href='?page=logout'>Logout</a><br><br>
+        {else}  <a href="http://localhost:8000/?page=login">Login</a>
+                <a href="http://localhost:8000/?page=register">Register</a>
+                <p style ='color:red'>Login if you want to join events</p>
+
         {/if}
-    </p>
+     {if $nerror}
+        <p style='color:red'>Event name is too short, minimum is 3 characters</p>
+    {/if}
+
+        {if $derror}
+        <p style='color:red'>Event description is too short, minimum is 5 characters</p>
+    {/if}
     <label for="name">Event Name:</label>
     <input type="text" id="name" name="name" required>
     <br>

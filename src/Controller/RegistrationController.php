@@ -43,7 +43,7 @@ class RegistrationController
                 $this->userEntityManager->save($users,$json_file);
                 header('Location: ' . "http://localhost:8000/index.php/?page=login");
             } else {
-                echo "<p style ='color:red'>Email already registered</p>";
+                $_SESSION['displayalreadyregistered'] = true;
             }
         }
         $params = [];

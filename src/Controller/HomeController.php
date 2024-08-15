@@ -32,23 +32,13 @@ class HomeController
                 $events[$_GET["joinevent"]]["joined_pers"]++;
                 $this->eventEntityManager->saveEvents($events, $json_file);
             }
-        } else {
-            echo "<p style ='color:red'>Login if you want to join events</p>";
         }
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
             $events = $this->eventValidation->EventValidation($events);
 
             if ($_SESSION["nerror"] === false && $_SESSION["derror"] === false) {
                 $this->eventEntityManager->saveEvents($events, $json_file);
-            } else {
-                if ($_SESSION["nerror"] === true) {
-                    echo "<p style ='color:red'>Event name is too short, minimum is 3 characters</p>";
-                }
-                if ($_SESSION["derror"] === true) {
-                    echo "<p style ='color:red'>Event description is too short, minimum is 5 characters</p>";
-                }
             }
         }
 
