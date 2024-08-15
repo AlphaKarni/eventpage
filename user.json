@@ -2,11 +2,13 @@
     {
         "username": "Mustafa",
         "email": "1",
-        "password": "$2y$10$kqRTuid0krNKUPLByDAjTuPUwqrs6byxXsBiK8k2xowV3GHyY1qmK"
+        "password": "$2y$10$kqRTuid0krNKUPLByDAjTuPUwqrs6byxXsBiK8k2xowV3GHyY1qmK",
+        "joined_events": []
     },
     {
         "username": "Mustafa2",
         "email": "2",
-        "password": "$2y$10$javA0v.aJkqNiu.MkDtLsOc1DC2S5jeebReOnubhbORt\/1xcGh7vK"
+        "password": "$2y$10$javA0v.aJkqNiu.MkDtLsOc1DC2S5jeebReOnubhbORt\/1xcGh7vK",
+        "joined_events": []
     }
 ]

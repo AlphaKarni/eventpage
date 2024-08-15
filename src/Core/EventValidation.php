@@ -33,6 +33,10 @@ class EventValidation
                     'maxpers' => $max_pers,
                     'id' => $id,
                     'joined_pers' => 0,
+                    'joined_user_email' =>
+                        [
+
+                        ]
                 ];
             $events[] = $event_data;
 

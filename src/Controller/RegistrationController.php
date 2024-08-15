@@ -35,6 +35,7 @@ class RegistrationController
                 'username' => $username,
                 'email' => $checkmail,
                 'password' => $hashed_password,
+                'joined_events' => []
             ];
             if (empty($luser)) {
                 $user_json = file_get_contents($json_file);

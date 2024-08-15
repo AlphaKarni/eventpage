@@ -27,6 +27,7 @@ class LoginController
                     $_SESSION["logged_in"] = true;
                     $_SESSION['username'] = $luser['username'];
                     $_SESSION['email'] = $luser['email'];
+
                     header('Location: ' . "http://localhost:8000/index.php");
                 } else {
                     echo "Wrong password";
