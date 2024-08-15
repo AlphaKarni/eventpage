@@ -1,9 +1,9 @@
 <?php
 
-namespace event\Controller;
+namespace App\Controller;
 
-use Model\UserEntityManager;
-use Model\UserRepository;
+use App\Model\UserEntityManager;
+use App\Model\UserRepository;
 
 require_once __DIR__ . '/../Model/UserRepository.php';
 require_once __DIR__ . '/../Model/UserEntityManager.php';

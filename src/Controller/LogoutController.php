@@ -1,6 +1,6 @@
 <?php
 
-namespace event\Controller;
+namespace App\Controller;
 
 class LogoutController
 {
