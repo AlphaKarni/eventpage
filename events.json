@@ -6,6 +6,15 @@
         "maxpers": "1000000000000000000000000000000000000000000000000000000000000000000",
         "id": 0,
         "joined_pers": 1.1235813213455892e+34,
-        "joined_user_email": []
+        "joined_user_email": "1"
+    },
+    {
+        "name": "TEst",
+        "date": "2024-08-20",
+        "desc": "Tsting join systemn",
+        "maxpers": "222",
+        "id": 1,
+        "joined_pers": 24,
+        "joined_user_email": "1"
     }
 ]

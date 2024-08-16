@@ -21,25 +21,22 @@ class EventValidation
             $_SESSION["derror"] = true;
         }
 
-            $event_date = htmlspecialchars($_POST['date']) ?? '';
-            $max_pers = htmlspecialchars($_POST['maxpers']);
-            $id = count($events);
+        $event_date = htmlspecialchars($_POST['date']) ?? '';
+        $max_pers = htmlspecialchars($_POST['maxpers']);
+        $id = count($events);
 
-            $event_data =
-                [
-                    'name' => $event_name,
-                    'date' => $event_date,
-                    'desc' => $event_desc,
-                    'maxpers' => $max_pers,
-                    'id' => $id,
-                    'joined_pers' => 0,
-                    'joined_user_email' =>
-                        [
+        $event_data =
+            [
+                'name' => $event_name,
+                'date' => $event_date,
+                'desc' => $event_desc,
+                'maxpers' => $max_pers,
+                'id' => $id,
+                'joined_pers' => 0,
+                'joined_user_email' => [],
+            ];
+        $events[] = $event_data;
 
-                        ]
-                ];
-            $events[] = $event_data;
-
-            return $events;
+        return $events;
     }
 }

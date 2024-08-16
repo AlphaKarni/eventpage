@@ -28,19 +28,20 @@ class HomeController
         $events = $this->eventRepository->findAllEvents($json_file);
 
         if ($_SESSION["logged_in"] === true && (isset($_GET["joinevent"]))) {
-                $joinedevent = $_GET["joinevent"];
-                $joinedpers = $_GET["joined_pers"];
-                $this->eventEntityManager->joinEvents($events, $json_file,$joinedevent,$joinedpers);
-                $this->eventEntityManager->saveEvents($events, $json_file);
+                $eevent = $_GET["joinevent"];
+                $this->eventEntityManager->joinEvent($events, $json_file,$eevent);
         }
-
-
+        if ($_SESSION["logged_in"] === true && (isset($_GET["leaveevent"]))) {
+            $eevent = $_GET["leaveevent"];
+            $this->eventEntityManager->leaveEvent($events, $json_file,$eevent);
+        }
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $events = $this->eventValidation->EventValidation($events);
             if ($_SESSION["nerror"] === false && $_SESSION["derror"] === false) {
                 $this->eventEntityManager->saveEvents($events, $json_file);
             }
         }
+
 
         $params = [
             'events' => $events,
