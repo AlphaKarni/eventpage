@@ -38,12 +38,9 @@ class RegistrationController
                 'password' => $hashed_password,
                 'joined_events' => []
             ];
+            $emailregistered = true;
+            $usernameregistered = true;
             if (empty($luseremail)) {
-//                $user_json = file_get_contents($json_file);
-//                $users = json_decode($user_json,true);
-//                $users[] = $user_data;
-//                $this->userEntityManager->save($users,$json_file);
-//                header('Location: ' . "http://localhost:8000/index.php/?page=login");
                 $emailregistered = false;
             } else {
                 $_SESSION['displayemailregistered'] = true;
