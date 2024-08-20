@@ -10,5 +10,28 @@
         "email": "2",
         "password": "$2y$10$javA0v.aJkqNiu.MkDtLsOc1DC2S5jeebReOnubhbORt\/1xcGh7vK",
         "joined_events": []
+    },
+    {
+        "username": "3",
+        "email": "3",
+        "password": "$2y$10$Y0H36KkVuVhDZclq3sTG0OLiDYnF\/PmjWkUagjvtiYc.BFfaNT8my",
+        "joined_events": []
+    },
+    {
+        "username": "Mustafa",
+        "email": "31",
+        "password": "$2y$10$A\/Acas3xEIhK4fK47zoOUOCusb.C81TNjuEZn.Ihv410tbn25Ogh2"
+    },
+    {
+        "username": "1",
+        "email": "41231",
+        "password": "$2y$10$RoYQaH16leMeMWe\/Yibfwurhikx9G6jza8ZsewoFuebJVrri8gvBm",
+        "joined_events": []
+    },
+    {
+        "username": "32",
+        "email": "32",
+        "password": "$2y$10$3rF3afQEyKpWDowvWB1VjeSRT4lW2158J9.fPiN0jO5DiaJmNGN62",
+        "joined_events": []
     }
 ]

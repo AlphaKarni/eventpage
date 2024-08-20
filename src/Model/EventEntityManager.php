@@ -11,13 +11,13 @@ class EventEntityManager
     }
     public function joinEvent($events, $json_file,$eevent,): void {
         $events[$eevent]["joined_pers"]++;
-        $events[$eevent]["joined_user_email"] = $_SESSION["email"];
+        $events[$eevent]["joined_user_usernames"][] = $_SESSION["username"];
         $this->saveEvents($events,$json_file);
     }
     public function leaveEvent($events,$json_file,$eevent): void{
         $events[$eevent]["joined_pers"]--;
-        $key = array_search($_SESSION["email"], $events[$eevent]["joined_user_email"]);
-        unset ($events[$eevent]["joined_user_email"][$key]);
+        $key = array_search($_SESSION["username"], $events[$eevent]["joined_user_usernames"], true);
+        unset ($events[$eevent]["joined_user_usernames"][$key]);
 
         $this->saveEvents($events,$json_file);
     }

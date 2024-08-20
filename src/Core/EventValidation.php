@@ -24,7 +24,7 @@ class EventValidation
         $event_date = htmlspecialchars($_POST['date']) ?? '';
         $max_pers = htmlspecialchars($_POST['maxpers']);
         $id = count($events);
-
+        $joined_user_users = [];
         $event_data =
             [
                 'name' => $event_name,
@@ -33,7 +33,7 @@ class EventValidation
                 'maxpers' => $max_pers,
                 'id' => $id,
                 'joined_pers' => 0,
-                'joined_user_email' => [],
+                'joined_user_usernames' => $joined_user_users
             ];
         $events[] = $event_data;
 

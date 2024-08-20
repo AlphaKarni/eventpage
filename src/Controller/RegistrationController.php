@@ -23,28 +23,43 @@ class RegistrationController
     {
         $users = [];
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            $username = htmlspecialchars($_POST['username']);
+            $checkusername = htmlspecialchars($_POST['username']);
             $checkmail = htmlspecialchars($_POST['email']);
             $password = htmlspecialchars($_POST['password']);
 
             $json_file = __DIR__. "/../../user.json";
 
-            $luser = $this->userRepository->findByEmail($checkmail,$json_file);
+            $luseremail = $this->userRepository->findByEmail($checkmail,$json_file);
+            $luserusername = $this->userRepository->findByUsername($checkusername,$json_file);
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $user_data = [
-                'username' => $username,
+                'username' => $checkusername,
                 'email' => $checkmail,
                 'password' => $hashed_password,
                 'joined_events' => []
             ];
-            if (empty($luser)) {
+            if (empty($luseremail)) {
+//                $user_json = file_get_contents($json_file);
+//                $users = json_decode($user_json,true);
+//                $users[] = $user_data;
+//                $this->userEntityManager->save($users,$json_file);
+//                header('Location: ' . "http://localhost:8000/index.php/?page=login");
+                $emailregistered = false;
+            } else {
+                $_SESSION['displayemailregistered'] = true;
+            }
+            if (empty($luserusername)) {
+                $usernameregistered = false;
+
+            } else {
+                $_SESSION['displayusernameregistered'] = true;
+            }
+            if (($emailregistered) === false && ($usernameregistered === false)) {
                 $user_json = file_get_contents($json_file);
                 $users = json_decode($user_json,true);
                 $users[] = $user_data;
                 $this->userEntityManager->save($users,$json_file);
-                header('Location: ' . "http://localhost:8000/index.php/?page=login");
-            } else {
-                $_SESSION['displayalreadyregistered'] = true;
+               header('Location: ' . "http://localhost:8000/index.php/?page=login");
             }
         }
         $params = [];

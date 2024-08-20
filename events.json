@@ -1,20 +1,20 @@
 [
     {
-        "name": "Gawewewe",
-        "date": "2024-08-22",
-        "desc": "Yes?!",
-        "maxpers": "1000000000000000000000000000000000000000000000000000000000000000000",
+        "name": "test",
+        "date": "2024-08-14",
+        "desc": "testest",
+        "maxpers": "100",
         "id": 0,
-        "joined_pers": 1.1235813213455892e+34,
-        "joined_user_email": "1"
+        "joined_pers": 0,
+        "joined_user_usernames": []
     },
     {
-        "name": "TEst",
-        "date": "2024-08-20",
-        "desc": "Tsting join systemn",
-        "maxpers": "222",
+        "name": "321",
+        "date": "2024-08-21",
+        "desc": "321321",
+        "maxpers": "321",
         "id": 1,
-        "joined_pers": 24,
-        "joined_user_email": "1"
+        "joined_pers": 0,
+        "joined_user_usernames": []
     }
 ]
