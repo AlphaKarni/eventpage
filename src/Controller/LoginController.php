@@ -18,9 +18,7 @@ class LoginController
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $checkmail = htmlspecialchars($_POST['email']);
 
-            $json_file = __DIR__ . '/../../user.json';
-
-            $luser = $this->userRepository->findByEmail($checkmail,$json_file);
+            $luser = $this->userRepository->findByEmail($checkmail);
             if (!empty($luser)) {
                 $password = $_POST['password'];
                 if (password_verify($password, $luser['password'])) {

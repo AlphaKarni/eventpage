@@ -25,18 +25,21 @@ class EventValidation
         $max_pers = htmlspecialchars($_POST['maxpers']);
         $id = count($events);
         $joined_user_users = [];
-        $event_data =
-            [
-                'name' => $event_name,
-                'date' => $event_date,
-                'desc' => $event_desc,
-                'maxpers' => $max_pers,
-                'id' => $id,
-                'joined_pers' => 0,
-                'joined_user_usernames' => $joined_user_users
-            ];
-        $events[] = $event_data;
 
+        if ($_SESSION["nerror"] === false && $_SESSION["derror"] === false) {
+            $event_data =
+                [
+                    'name' => $event_name,
+                    'date' => $event_date,
+                    'desc' => $event_desc,
+                    'maxpers' => $max_pers,
+                    'id' => $id,
+                    'joined_pers' => 0,
+                    'joined_user_usernames' => $joined_user_users
+                ];
+            $events[] = $event_data;
+            return $events;
+        }
         return $events;
     }
 }

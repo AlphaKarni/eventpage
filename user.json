@@ -33,5 +33,17 @@
         "email": "32",
         "password": "$2y$10$3rF3afQEyKpWDowvWB1VjeSRT4lW2158J9.fPiN0jO5DiaJmNGN62",
         "joined_events": []
+    },
+    {
+        "username": "12",
+        "email": "12",
+        "password": "$2y$10$Q5HdzeHIDOzc4.G0tvk.euOxo5FoyJ6p3WZfM.UAzRp2xkyENJGoW",
+        "joined_events": []
+    },
+    {
+        "username": "2134",
+        "email": "2134",
+        "password": "$2y$10$fq27vOg27Q2yPezM8eK0heC4HH2cJrHODrAun5L2Yj9IT5pW1mKji",
+        "joined_events": []
     }
 ]

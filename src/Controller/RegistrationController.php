@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Model\UserEntityManager;
 use App\Model\UserRepository;
 
-require_once __DIR__ . '/../Model/UserRepository.php';
-require_once __DIR__ . '/../Model/UserEntityManager.php';
 
 class RegistrationController
 {
@@ -21,16 +19,14 @@ class RegistrationController
 
     public function loadRegistration($latte): void
     {
-        $users = [];
+        $json_file = __DIR__ . '/../../user.json';
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $checkusername = htmlspecialchars($_POST['username']);
             $checkmail = htmlspecialchars($_POST['email']);
             $password = htmlspecialchars($_POST['password']);
 
-            $json_file = __DIR__. "/../../user.json";
-
-            $luseremail = $this->userRepository->findByEmail($checkmail,$json_file);
-            $luserusername = $this->userRepository->findByUsername($checkusername,$json_file);
+            $luseremail = $this->userRepository->findByEmail($checkmail);
+            $luserusername = $this->userRepository->findByUsername($checkusername);
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $user_data = [
                 'username' => $checkusername,

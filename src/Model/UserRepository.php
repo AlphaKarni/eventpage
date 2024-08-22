@@ -4,8 +4,10 @@ namespace App\Model;
 
 class UserRepository
 {
-    public function findByEmail($checkmail,$json_file): array
+    public function findByEmail($checkmail): array
     {
+        $json_file = __DIR__ . '/../../user.json';
+
         $users = json_decode(file_get_contents($json_file), true);
 
         foreach ($users as $luser) {
@@ -15,8 +17,10 @@ class UserRepository
         }
         return [];
     }
-    public function findByUsername($checkusername,$json_file): array
+    public function findByUsername($checkusername): array
     {
+        $json_file = __DIR__ . '/../../user.json';
+
         $users = json_decode(file_get_contents($json_file), true);
         foreach ($users as $luser) {
             if ($luser['username'] === $checkusername) {
