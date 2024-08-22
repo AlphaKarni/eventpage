@@ -23,26 +23,22 @@ class HomeController
     }
     public function loadEventSignup($latte): void
     {
-        $json_file = __DIR__ . '/../../events.json';
-
-        $events = $this->eventRepository->findAllEvents($json_file);
+        $events = $this->eventRepository->findAllEvents();
 
         if ($_SESSION["logged_in"] === true && (isset($_GET["joinevent"]))) {
                 $eevent = $_GET["joinevent"];
-                $this->eventEntityManager->joinEvent($events, $json_file,$eevent);
+                $this->eventEntityManager->joinEvent($events,$eevent);
         }
         if ($_SESSION["logged_in"] === true && (isset($_GET["leaveevent"]))) {
             $eevent = $_GET["leaveevent"];
-            $this->eventEntityManager->leaveEvent($events, $json_file,$eevent);
+            $this->eventEntityManager->leaveEvent($events,$eevent);
         }
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $events = $this->eventValidation->EventValidation($events);
             if ($_SESSION["nerror"] === false && $_SESSION["derror"] === false) {
-                $this->eventEntityManager->saveEvents($events, $json_file);
+                $this->eventEntityManager->saveEvents($events);
             }
         }
-
-
         $params = [
             'events' => $events,
             "logged_in" => $_SESSION["logged_in"],
