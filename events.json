@@ -1,29 +1,11 @@
 [
     {
-        "name": "test",
-        "date": "2024-08-14",
-        "desc": "testest",
-        "maxpers": "100",
+        "name": "Test!",
+        "date": "Never",
+        "desc": "Words",
+        "maxpers": "100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         "id": 0,
-        "joined_pers": 0,
-        "joined_user_usernames": []
-    },
-    {
-        "name": "321",
-        "date": "2024-08-21",
-        "desc": "321321",
-        "maxpers": "321",
-        "id": 1,
-        "joined_pers": -1,
-        "joined_user_usernames": []
-    },
-    {
-        "name": "12314",
-        "date": "2024-08-23",
-        "desc": "12314",
-        "maxpers": "123421",
-        "id": 2,
-        "joined_pers": 0,
+        "joined_pers": 1.0e+73,
         "joined_user_usernames": []
     }
 ]

@@ -4,42 +4,34 @@ namespace App\Core;
 
 class EventValidation
 {
-    public function EventValidation($events): array
-    {
-        $_SESSION["nerror"] = false;
-        $_SESSION["derror"] = false;
-
-        if (strlen(trim($_POST['name'])) >= 3) {
-            $event_name = htmlspecialchars($_POST['name']);
-        } else {
-            $_SESSION["nerror"] = true;
+    public function EventValidation(
+        $events,
+        $validateEvent,
+        $errors,
+        $eventDate,
+        $currentDate
+    ): array {
+        if (strlen(trim($validateEvent['name'])) < 3) {
+            $errors["nameerror"] = true;
         }
 
-        if (strlen(trim($_POST['desc'])) >= 5) {
-            $event_desc = htmlspecialchars($_POST['desc']);
-        } else {
-            $_SESSION["derror"] = true;
+        if (strlen(trim($validateEvent['desc'])) < 5) {
+            $errors["descerror"] = true;
         }
 
-        $event_date = htmlspecialchars($_POST['date']) ?? '';
-        $max_pers = htmlspecialchars($_POST['maxpers']);
-        $id = count($events);
-        $joined_user_users = [];
+        if ($validateEvent["maxpers"] <= 0) {
+            $errors["maxperserror"] = true;
+        }
 
-        if ($_SESSION["nerror"] === false && $_SESSION["derror"] === false) {
-            $event_data =
-                [
-                    'name' => $event_name,
-                    'date' => $event_date,
-                    'desc' => $event_desc,
-                    'maxpers' => $max_pers,
-                    'id' => $id,
-                    'joined_pers' => 0,
-                    'joined_user_usernames' => $joined_user_users
-                ];
-            $events[] = $event_data;
+        if ($currentDate > $eventDate) {
+            $errors["dateerror"] = true;
+        }
+
+        if ($errors["nameerror"] === false && $errors["descerror"] === false &&
+            $errors["maxperserror"] === false && $errors["dateerror"] === false) {
+            $events[] = $validateEvent;
             return $events;
         }
-        return $events;
+        return $errors;
     }
 }

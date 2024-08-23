@@ -14,13 +14,6 @@
                 <a href="http://localhost:8000/?page=register">Register</a>
                 <p style ='color:red'>Login if you want to join events</p>
 
-        {/if}
-     {if $nerror}
-        <p style='color:red'>Event name is too short, minimum is 3 characters</p>
-    {/if}
-
-        {if $derror}
-        <p style='color:red'>Event description is too short, minimum is 5 characters</p>
     {/if}
     <label for="name">Event Name:</label>
     <input type="text" id="name" name="name" required>
@@ -41,16 +34,28 @@
     <input type="submit" value="Submit" name="Event">
 
 </form>
-
+{varPrint $}
+    {if $errors["nameerror"] === true}
+    <p style='color:red'>Event Name should contain atleast 3 Characters</p>
+    {/if}
+    {if $errors["descerror"] === true}
+    <p style='color:red'>Event Description should contain atleast 3 Characters</p>
+    {/if}
+    {if $errors["maxperserror"] === true}
+    <p style='color:red'>Max Participants should atleast be 1</p>
+    {/if}
+    {if $errors["dateerror"] === true}
+    <p style='color:red'>Event Date can't be in the Past</p>
+    {/if}
 
 {foreach $events as $event}
     {var $buttonid = $event['id']}
-    {var $status = false}
+    {var $joinedevent = false}
     {var $joinedevent = false}
     <p>Event Name: {$event['name']}
         {foreach $event["joined_user_usernames"] as $users}
             {if $users === $_SESSION['username']}
-               {var $joinedevent = true}
+                {var $joinedevent = true}
             {/if}
             {if $joinedevent === true}
                 <------- You joined the Event!
@@ -65,12 +70,12 @@
     {if $_SESSION["logged_in"] === true && $event['maxpers'] > $event['joined_pers']}
         {foreach $event["joined_user_usernames"] as $username}
             {if $username === $_SESSION["username"]}
-                {var $status = true}
+                {var $joinedevent = true}
             {/if}
         {/foreach}
-        {if $status === true}
+        {if $joinedevent === true}
             <a href="?leaveevent={$buttonid}">Leave</a>
-            {else} <a href="?joinevent={$buttonid}">Join!</a>
+        {else} <a href="?joinevent={$buttonid}">Join!</a>
         {/if}
     {/if}
     <br>
