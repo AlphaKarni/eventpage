@@ -9,10 +9,10 @@
 
     <p>Event SignUp <br><br>
         {if $logged_in === true}Username: {$_SESSION['username']}
-                <a href='?page=logout'>Logout</a><br><br>
-        {else}  <a href="http://localhost:8000/?page=login">Login</a>
-                <a href="http://localhost:8000/?page=register">Register</a>
-                <p style ='color:red'>Login if you want to join events</p>
+        <a href='?page=logout'>Logout</a><br><br>
+        {else} <a href="http://localhost:8000/?page=login">Login</a>
+        <a href="http://localhost:8000/?page=register">Register</a>
+        <p style='color:red'>Login if you want to join events</p>
 
     {/if}
     <label for="name">Event Name:</label>
@@ -34,7 +34,7 @@
     <input type="submit" value="Submit" name="Event">
 
 </form>
-{varPrint $}
+
     {if $errors["nameerror"] === true}
     <p style='color:red'>Event Name should contain atleast 3 Characters</p>
     {/if}
