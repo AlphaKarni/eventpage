@@ -14,12 +14,27 @@ class UserRepositoryTest extends TestCase
         $this->assertIsArray($users);
         $this->assertCount(4, $users);
     }
+    public function testFindByEmailfailed()
+    {
+        $userRepository = new UserRepository();
+        $users = $userRepository->findByEmail("12312341135");
+        $this->assertIsArray($users);
+        $this->assertCount(0, $users);
+    }
+
     public function testFindByUsername()
     {
         $userRepository = new UserRepository();
         $users = $userRepository->findByUsername("Mustafa");
         $this->assertIsArray($users);
         $this->assertCount(4, $users);
+    }
+    public function testFindByUsernamefailed()
+    {
+        $userRepository = new UserRepository();
+        $users = $userRepository->findByUsername("Masefsrsdrb");
+        $this->assertIsArray($users);
+        $this->assertCount(0, $users);
     }
 
 }
