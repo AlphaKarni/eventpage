@@ -29,9 +29,9 @@ class HomeController
 
     public function loadEventSignup($latte): void
     {
-        $json_file = __DIR__ . '/../../events.json';
-        $events = $this->eventRepository->findAllEvents($json_file);
+        $events = $this->eventRepository->findAllEvents();
 
+        $json_file = __dir__ . "/../../event.json";
         if ($_SESSION["logged_in"] === true && (isset($_GET["joinevent"]))) {
             $eevent = $_GET["joinevent"];
             $this->eventEntityManager->joinEvent($events, $eevent);
@@ -52,7 +52,7 @@ class HomeController
                 "joined_user_usernames" => [],
             ];
 
-            $result = $this->eventValidation->validate($events, $validateEvent);
+            $result = $this->eventValidation->validateEvent($events, $validateEvent);
             if (count($result) === 4) {
                 $errors = $result;
             } else {

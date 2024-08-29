@@ -2,20 +2,17 @@
     {
         "username": "Mustafa",
         "email": "1",
-        "password": "$2y$10$kqRTuid0krNKUPLByDAjTuPUwqrs6byxXsBiK8k2xowV3GHyY1qmK",
-        "joined_events": []
+        "password": "$2y$10$kqRTuid0krNKUPLByDAjTuPUwqrs6byxXsBiK8k2xowV3GHyY1qmK"
     },
     {
         "username": "Mustafa2",
         "email": "2",
-        "password": "$2y$10$javA0v.aJkqNiu.MkDtLsOc1DC2S5jeebReOnubhbORt\/1xcGh7vK",
-        "joined_events": []
+        "password": "$2y$10$javA0v.aJkqNiu.MkDtLsOc1DC2S5jeebReOnubhbORt\/1xcGh7vK"
     },
     {
         "username": "3",
         "email": "3",
-        "password": "$2y$10$Y0H36KkVuVhDZclq3sTG0OLiDYnF\/PmjWkUagjvtiYc.BFfaNT8my",
-        "joined_events": []
+        "password": "$2y$10$Y0H36KkVuVhDZclq3sTG0OLiDYnF\/PmjWkUagjvtiYc.BFfaNT8my"
     },
     {
         "username": "Mustafa",
@@ -25,25 +22,39 @@
     {
         "username": "1",
         "email": "41231",
-        "password": "$2y$10$RoYQaH16leMeMWe\/Yibfwurhikx9G6jza8ZsewoFuebJVrri8gvBm",
-        "joined_events": []
+        "password": "$2y$10$RoYQaH16leMeMWe\/Yibfwurhikx9G6jza8ZsewoFuebJVrri8gvBm"
     },
     {
         "username": "32",
         "email": "32",
-        "password": "$2y$10$3rF3afQEyKpWDowvWB1VjeSRT4lW2158J9.fPiN0jO5DiaJmNGN62",
-        "joined_events": []
+        "password": "$2y$10$3rF3afQEyKpWDowvWB1VjeSRT4lW2158J9.fPiN0jO5DiaJmNGN62"
     },
     {
         "username": "12",
         "email": "12",
-        "password": "$2y$10$Q5HdzeHIDOzc4.G0tvk.euOxo5FoyJ6p3WZfM.UAzRp2xkyENJGoW",
-        "joined_events": []
+        "password": "$2y$10$Q5HdzeHIDOzc4.G0tvk.euOxo5FoyJ6p3WZfM.UAzRp2xkyENJGoW"
     },
     {
         "username": "2134",
         "email": "2134",
-        "password": "$2y$10$fq27vOg27Q2yPezM8eK0heC4HH2cJrHODrAun5L2Yj9IT5pW1mKji",
+        "password": "$2y$10$fq27vOg27Q2yPezM8eK0heC4HH2cJrHODrAun5L2Yj9IT5pW1mKji"
+    },
+    {
+        "username": "5",
+        "email": "5",
+        "password": "$2y$10$M6TppeeqwvXp0IL8fwrltuaz6I12BZTkxCcMzCm6gsQUu3eTeAyTa",
+        "joined_events": []
+    },
+    {
+        "username": "N7co9",
+        "email": "Peter@bozo.de",
+        "password": "$2y$10$jCaP6Dmpk.be3sCIRb8vD.JS7sSXrWX0G\/N2BpQR6zpJvuQkAzwKu",
+        "joined_events": []
+    },
+    {
+        "username": "ewfwe",
+        "email": "fwefwef",
+        "password": "$2y$10$R19lbHDW10qxe5.VE6xXp.qSXNPaF\/wYkYRzMwttJwomutbfEb4cq",
         "joined_events": []
     }
 ]

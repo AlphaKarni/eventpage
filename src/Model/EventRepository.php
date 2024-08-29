@@ -4,11 +4,26 @@ namespace App\Model;
 
 class EventRepository
 {
-    public function findAllEvents($json_file): ?array
+    private $filePath;
+    public function __construct($filePath = null)
     {
-        if (file_exists($json_file)) {
-            return json_decode(file_get_contents($json_file), true);
+        $this->filePath = $filePath ?? __DIR__ . '/../../events.json';
+    }
+    public function findAllEvents(): array
+    {
+        if ($this->fileExists($this->filePath)) {
+            return $this->loadEvents();
         }
-        return null;
+        return [];
+    }
+
+    public function fileExists($filePath): bool
+    {
+        return file_exists($filePath);
+    }
+
+    public function loadEvents(): array
+    {
+        return json_decode(file_get_contents($this->filePath), true);
     }
 }

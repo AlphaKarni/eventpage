@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tests\Model;
 
@@ -17,7 +17,7 @@ class UserRepositoryTest extends TestCase
     public function testFindByEmailfailed()
     {
         $userRepository = new UserRepository();
-        $users = $userRepository->findByEmail("12312341135");
+        $users = $userRepository->findByEmail("notexistent");
         $this->assertIsArray($users);
         $this->assertCount(0, $users);
     }
@@ -32,7 +32,7 @@ class UserRepositoryTest extends TestCase
     public function testFindByUsernamefailed()
     {
         $userRepository = new UserRepository();
-        $users = $userRepository->findByUsername("Masefsrsdrb");
+        $users = $userRepository->findByUsername("notexistent");
         $this->assertIsArray($users);
         $this->assertCount(0, $users);
     }

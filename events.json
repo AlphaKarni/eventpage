@@ -1,28 +1,21 @@
 [
     {
-        "name": "Test!",
-        "date": "Never",
-        "desc": "Words",
-        "maxpers": "100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "name": "test",
+        "date": "2024-08-30",
+        "desc": "teste",
+        "maxpers": "13",
         "id": 0,
-        "joined_pers": 1.0e+73,
-        "joined_user_usernames": []
+        "joined_pers": 1,
+        "joined_user_usernames": {
+            "1": "Mustafa2"
+        }
     },
     {
-        "name": "1234",
-        "date": "2024-08-29",
-        "desc": "12345",
-        "maxpers": "12345",
+        "name": "Bambus",
+        "date": "2025-04-23",
+        "desc": "Bambus ist Gr\u00fcn",
+        "maxpers": "20",
         "id": 1,
-        "joined_pers": 0,
-        "joined_user_usernames": []
-    },
-    {
-        "name": "123",
-        "date": "2024-08-29",
-        "desc": "12345",
-        "maxpers": "12345",
-        "id": 2,
         "joined_pers": 0,
         "joined_user_usernames": []
     }
