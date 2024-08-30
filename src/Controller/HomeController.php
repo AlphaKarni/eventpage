@@ -20,7 +20,7 @@ class HomeController
     public EventEntityManager $eventEntityManager;
     public EventValidation $eventValidation;
 
-    public function __construct()
+    public function __construct($filePath = null)
     {
         $this->eventRepository = new EventRepository();
         $this->eventEntityManager = new EventEntityManager();
@@ -31,7 +31,6 @@ class HomeController
     {
         $events = $this->eventRepository->findAllEvents();
 
-        $json_file = __dir__ . "/../../event.json";
         if ($_SESSION["logged_in"] === true && (isset($_GET["joinevent"]))) {
             $eevent = $_GET["joinevent"];
             $this->eventEntityManager->joinEvent($events, $eevent);

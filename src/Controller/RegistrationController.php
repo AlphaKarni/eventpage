@@ -11,15 +11,15 @@ class RegistrationController
     private UserRepository $userRepository;
     private UserEntityManager $userEntityManager;
 
-    public function __construct()
+    private $filePath;
+    public function __construct($filePath = null)
     {
+        $this->filePath = $filePath ?? __DIR__ . '/../../user.json';
         $this->userRepository = new UserRepository();
         $this->userEntityManager = new UserEntityManager();
     }
-
     public function loadRegistration($latte): void
     {
-        $json_file = __DIR__ . '/../../user.json';
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $checkusername = htmlspecialchars($_POST['username']);
             $checkmail = htmlspecialchars($_POST['email']);
@@ -36,22 +36,24 @@ class RegistrationController
             ];
             $emailregistered = true;
             $usernameregistered = true;
+
             if (empty($luseremail)) {
                 $emailregistered = false;
             } else {
                 $_SESSION['displayemailregistered'] = true;
             }
+
             if (empty($luserusername)) {
                 $usernameregistered = false;
-
             } else {
                 $_SESSION['displayusernameregistered'] = true;
             }
+
             if (($emailregistered) === false && ($usernameregistered === false)) {
-                $user_json = file_get_contents($json_file);
+                $user_json = file_get_contents($this->filePath);
                 $users = json_decode($user_json,true);
                 $users[] = $user_data;
-                $this->userEntityManager->save($users,$json_file);
+                $this->userEntityManager->save($users,$this->filePath);
                header('Location: ' . "http://localhost:8000/index.php/?page=login");
             }
         }

@@ -15,6 +15,7 @@ class LoginController
     }
     function loadLogin($latte): void
     {
+        $_SESSION["logged_in"] = false;
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $checkmail = htmlspecialchars($_POST['email']);
 

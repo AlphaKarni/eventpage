@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class EventRepositoryTest extends TestCase
 {
-    private $testFilePath;
+    private string $testFilePath;
     protected function setUp(): void
     {
         parent::setUp();
