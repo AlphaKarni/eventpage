@@ -8,18 +8,18 @@ use PHPUnit\Framework\TestCase;
 class UserEntityManagerTest extends TestCase
 {
     private UserEntityManager $userEntityManager;
-    private string $testJson;
+    public string $userFilePath;
 
     protected function setUp(): void
     {
         $this->userEntityManager = new UserEntityManager();
-        $this->testJson = sys_get_temp_dir() . '/testusers.json';
+        $this->userFilePath = sys_get_temp_dir() . '/testusers.json';
     }
 
     protected function tearDown(): void
     {
-        if (file_exists($this->testJson)) {
-            unlink($this->testJson);
+        if (file_exists($this->userFilePath)) {
+            unlink($this->userFilePath);
         }
     }
 
@@ -31,10 +31,10 @@ class UserEntityManagerTest extends TestCase
             ['username' => "test2", 'email' => 'test2@test.com']
         ];
 
-        $this->userEntityManager->save($users, $this->testJson);
-        $this->assertFileExists($this->testJson);
+        $this->userEntityManager->saveUsers($this->userFilePath, $users);
+        $this->assertFileExists($this->userFilePath);
 
-        $content = file_get_contents($this->testJson);
+        $content = file_get_contents($this->userFilePath);
         $this->assertNotEmpty($content);
     }
 }

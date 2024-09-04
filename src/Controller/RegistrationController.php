@@ -8,32 +8,30 @@ use App\Model\UserRepository;
 
 class RegistrationController
 {
-    private UserRepository $userRepository;
-    private UserEntityManager $userEntityManager;
-
-    private $filePath;
-    public function __construct($filePath = null)
+    public UserRepository $userRepository;
+    public UserEntityManager $userEntityManager;
+    public function __construct($userFilePath = null)
     {
-        $this->filePath = $filePath ?? __DIR__ . '/../../user.json';
         $this->userRepository = new UserRepository();
         $this->userEntityManager = new UserEntityManager();
     }
-    public function loadRegistration($latte): void
+    public function loadRegistration($latte, $userFilePath): void
     {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $checkusername = htmlspecialchars($_POST['username']);
             $checkmail = htmlspecialchars($_POST['email']);
             $password = htmlspecialchars($_POST['password']);
 
-            $luseremail = $this->userRepository->findByEmail($checkmail);
-            $luserusername = $this->userRepository->findByUsername($checkusername);
+            $luseremail = $this->userRepository->findByEmail($checkmail, $userFilePath);
+            $luserusername = $this->userRepository->findByUsername($checkusername, $userFilePath);
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
             $user_data = [
                 'username' => $checkusername,
                 'email' => $checkmail,
-                'password' => $hashed_password,
-                'joined_events' => []
+                'password' => $hashed_password
             ];
+
             $emailregistered = true;
             $usernameregistered = true;
 
@@ -50,10 +48,10 @@ class RegistrationController
             }
 
             if (($emailregistered) === false && ($usernameregistered === false)) {
-                $user_json = file_get_contents($this->filePath);
+                $user_json = file_get_contents($userFilePath);
                 $users = json_decode($user_json,true);
                 $users[] = $user_data;
-                $this->userEntityManager->save($users,$this->filePath);
+                $this->userEntityManager->saveUsers($users,$userFilePath);
                header('Location: ' . "http://localhost:8000/index.php/?page=login");
             }
         }

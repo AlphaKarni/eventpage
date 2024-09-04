@@ -13,13 +13,13 @@ class LoginController
     {
         $this->userRepository = new UserRepository();
     }
-    function loadLogin($latte): void
+    function loadLogin($latte, $userFilePath): void
     {
         $_SESSION["logged_in"] = false;
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $checkmail = htmlspecialchars($_POST['email']);
 
-            $luser = $this->userRepository->findByEmail($checkmail);
+            $luser = $this->userRepository->findByEmail($checkmail, $userFilePath);
             if (!empty($luser)) {
                 $password = $_POST['password'];
                 if (password_verify($password, $luser['password'])) {

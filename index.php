@@ -16,16 +16,19 @@ require_once __DIR__ . '/src/Controller/RegistrationController.php';
 
 $latte = new Latte\Engine;
 
+$eventFilePath = __DIR__ . '/events.json';
+$userFilePath = __DIR__ . '/user.json';
 $page = $_GET['page'];
 
 switch ($page) {
     case 'login': new LoginController();
-        (new LoginController)->loadLogin($latte);
+        (new LoginController)->loadLogin($latte,$userFilePath);
         break;
 
     case 'register': new RegistrationController();
-        (new RegistrationController)->loadRegistration($latte);
+        (new RegistrationController)->loadRegistration($latte,$userFilePath);
         break;
+
     case 'logout':
         (new LogoutController)->loadLogout();
         break;

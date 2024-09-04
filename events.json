@@ -6,9 +6,9 @@
         "maxpers": "13",
         "id": 0,
         "joined_pers": 1,
-        "joined_user_usernames": {
-            "1": "Mustafa2"
-        }
+        "joined_user_usernames": [
+            "Mustafa"
+        ]
     },
     {
         "name": "Bambus",

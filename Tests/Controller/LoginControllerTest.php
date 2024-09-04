@@ -30,13 +30,14 @@ class LoginControllerTest extends TestCase
         $latte = new Latte\Engine;
 
         $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_POST['email'] = 'test@example.com';
+        $_POST['email'] = 'test@test.com';
         $_POST['password'] = 'correctpassword';
 
         $hashedPassword = password_hash('correctpassword', PASSWORD_DEFAULT);
+
         $userData = [
             'username' => 'testuser',
-            'email' => 'test@example.com',
+            'email' => 'test@test.com',
             'password' => $hashedPassword
         ];
 
@@ -46,7 +47,7 @@ class LoginControllerTest extends TestCase
 
         $this->assertTrue($_SESSION["logged_in"]);
         $this->assertEquals('testuser', $_SESSION['username']);
-        $this->assertEquals('test@example.com', $_SESSION['email']);
+        $this->assertEquals('test@test.com', $_SESSION['email']);
     }
 
     public function testIncorrectPassword()

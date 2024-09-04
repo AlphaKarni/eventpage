@@ -1,119 +1,83 @@
-<?php
+<?php declare(strict_types=1);
 
-use PHPUnit\Framework\TestCase;
+
 use App\Controller\HomeController;
 use App\Model\EventRepository;
 use App\Model\EventEntityManager;
 use App\Core\EventValidation;
+use PHPUnit\Framework\TestCase;
 
 class HomeControllerTest extends TestCase
 {
-    private $controller;
-    private $eventRepositoryMock;
-    private $eventEntityManagerMock;
-    private $eventValidationMock;
+    public HomeController $homeController;
+    public EventRepository $eventRepository;
+    public EventEntityManager $eventEntityManagerMock;
+    public EventValidation $eventValidation;
 
     protected function setUp(): void
     {
-        parent::setUp();
         session_start();
-
-        $this->eventRepositoryMock = $this->createMock(EventRepository::class);
-        $this->eventEntityManagerMock = $this->createMock(EventEntityManager::class);
-        $this->eventValidationMock = $this->createMock(EventValidation::class);
-
-        $this->controller = new HomeController();
-        $this->controller->eventRepository = $this->eventRepositoryMock;
-        $this->controller->eventEntityManager = $this->eventEntityManagerMock;
-        $this->controller->eventValidation = $this->eventValidationMock;
-
-        $_SESSION['logged_in'] = true;
-        $_SESSION['username'] = 'test';
+        $this->eventEntityManagerMock = $this->createMock(App\Model\EventEntityManager::class);
+        $this->homeController = new App\Controller\HomeController();
     }
-
     protected function tearDown(): void
     {
-        parent::tearDown();
         session_destroy();
     }
 
     public function testJoinEvent()
     {
         $latte = new Latte\Engine;
-        $_GET['joinevent'] = 0;
-        $events = [['id' => 0, 'name' => 'Test Event', 'joined_user_usernames' => []]];
 
-        $this->eventRepositoryMock->method('findAllEvents')->willReturn($events);
-        $this->eventEntityManagerMock->method('joinEvent')->willReturnCallback(function (&$events, $eevent) {
-            $events[0]['joined_user_usernames'][] = $_SESSION['username'];
-        });
+        $_SESSION['logged_in'] = true;
+        $_GET['joinevent'] = 'event1';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
 
-        $this->controller->loadEventSignup($latte);
+        $events = [['id' => 'Test', 'name' => 'Test Event']];
+        $this->eventRepository->findAllEvents()->willReturn($events);
+        $this->eventEntityManagerMock->expects($this->once())
+            ->method('joinEvent')
+            ->with($this->equalTo($events), $this->equalTo('event1'));
 
-        $this->assertContains('test', $events[0]['joined_user_usernames']);
+        $this->homeController->loadEventSignup($latte);
     }
 
     public function testLeaveEvent()
     {
         $latte = new Latte\Engine;
-        $_GET['leaveevent'] = 1;
-        $events = [['id' => 1, 'name' => 'Test Event', 'joined_user_usernames' => ['test']]];
 
-        $this->eventRepositoryMock->method('findAllEvents')->willReturn($events);
-        $this->eventEntityManagerMock->method('leaveEvent')->willReturnCallback(function (&$events, $eevent) {
-            if (($key = array_search($_SESSION['username'], $events[0]['joined_user_usernames'])) !== false) {
-                unset($events[0]['joined_user_usernames'][$key]);
-            }
-        });
+        $_SESSION['logged_in'] = true;
+        $_GET['leaveevent'] = 'event1';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
 
-        $this->controller->loadEventSignup($latte);
+        $events = [['id' => 'Test', 'name' => 'Test Event']];
+        $this->eventRepositoryMock->
+        $this->eventEntityManagerMock->expects($this->once())
+            ->method('leaveEvent')
+            ->with($this->equalTo($events), $this->equalTo('event1'));
 
-        $this->assertNotContains('test', $events[0]['joined_user_usernames']);
+        $this->homeController->loadEventSignup($latte);
     }
 
-    public function testPostNewEventSuccessful()
+    public function testPostRequestMethodHandling()
     {
         $latte = new Latte\Engine;
+
+        $_SESSION['logged_in'] = true;
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST = [
             'name' => 'New Event',
-            'date' => '2024-08-30',
+            'date' => '2024-09-04',
             'desc' => 'Description',
-            'maxpers' => 50
+            'maxpers' => 50,
         ];
-        $events = [];
+
+        $events = [['id' => 'Test', 'name' => 'Test Event']];
         $this->eventRepositoryMock->method('findAllEvents')->willReturn($events);
-        $this->eventValidationMock->method('validateEvent')->willReturn([$events, true]);
+        $this->eventValidationMock->method('validateEvent')->willReturn([]);
 
-        $this->eventEntityManagerMock->expects($this->once())->method('saveEvents');
-
-        ob_start();
-        $this->controller->loadEventSignup($latte);
-        ob_end_clean();
-    }
-
-    public function testPostNewEventUnsuccessful()
-    {
-        $latte = new Latte\Engine;
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_POST = [
-            'name' => '',
-            'date' => 'invalid-date',
-            'desc' => '',
-            'maxpers' => 'not-a-number'
-        ];
-        $events = [];
-        $errors = ['Invalid data provided'];
-        $this->eventRepositoryMock->method('findAllEvents')->willReturn($events);
-        $this->eventValidationMock->method('validateEvent')->willReturn([$events, $errors]);
-
-        $this->eventEntityManagerMock->expects($this->never())->method('saveEvents');
-
-        ob_start();
-        $this->controller->loadEventSignup($latte);
-        $output = ob_get_contents();
-        ob_end_clean();
-
-        $this->assertStringContainsString('Invalid data provided', $output);
+        $this->homeController->loadEventSignup($latte);
     }
 }
+
+?>

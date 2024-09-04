@@ -4,8 +4,8 @@ namespace App\Model;
 
 class UserEntityManager
 {
-    function save($users,$json_file): void
+    function saveUsers($users, $userFilePath): void
     {
-        file_put_contents($json_file, json_encode($users, JSON_PRETTY_PRINT));
+        file_put_contents($userFilePath, json_encode($users, JSON_PRETTY_PRINT));
     }
 }
