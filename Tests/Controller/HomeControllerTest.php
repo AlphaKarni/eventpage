@@ -92,8 +92,6 @@ class HomeControllerTest extends TestCase
         foreach ($events as $event) {
             if ($event['name'] === $_POST['name']) {
                 $eventID = $event['id'];
-            } else {
-                print_r("ERRORE");
             }
         }
         $this->assertSame($_POST["name"],$events[$eventID]["name"]);
@@ -109,9 +107,12 @@ class HomeControllerTest extends TestCase
             'desc' => 'Nein',
             'maxpers' => 0,
         ];
-        $errors = $this->homeController->loadEventSignup($this->latte, $this->testFilePath);
-        $this->assertNotEmpty($errors);
+        $this->homeController->loadEventSignup($this->latte, $this->testFilePath);
+        $events = $this->eventRepository->findAllEvents($this->testFilePath);
+        foreach ($events as $event) {
+            $eventName = $event["name"];
+            $this->assertNotSame($_POST["name"],$eventName);
+        }
     }
 }
-
 ?>

@@ -54,7 +54,6 @@ class HomeController
             $result = $this->eventValidation->validateEvent($events, $validateEvent);
             if (count($result) === 4) {
                 $errors = $result;
-                return $errors;
             } else {
                 $this->eventEntityManager->saveEvents($result,$eventFilePath);
             }
