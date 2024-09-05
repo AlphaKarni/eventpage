@@ -8,10 +8,14 @@ use PHPUnit\Framework\TestCase;
 class EventRepositoryTest extends TestCase
 {
     private string $testFilePath;
+    private string $dummyFilePath;
+    private EventRepository $eventRepository;
     protected function setUp(): void
     {
         parent::setUp();
         $this->testFilePath = __DIR__ . '/test_events.json';
+        $this->dummyFilePath = __DIR__ . '/dummy_events.json';
+        $this->eventRepository = new EventRepository();
     }
     protected function tearDown(): void
     {
@@ -22,8 +26,7 @@ class EventRepositoryTest extends TestCase
     }
     public function testFindAllEventsEmpty()
     {
-        $events = new EventRepository($this->testFilePath);
-        $result = $events->findAllEvents();
+        $result = $this->eventRepository->findAllEvents($this->dummyFilePath);
         $this->assertIsArray($result);
         $this->assertEmpty($result);
     }
@@ -40,8 +43,8 @@ class EventRepositoryTest extends TestCase
         ];
         file_put_contents($this->testFilePath, json_encode($sampleData));
 
-        $events = new EventRepository($this->testFilePath);
-        $result = $events->findAllEvents();
+
+        $result = $this->eventRepository->findAllEvents($this->testFilePath);
         $this->assertIsArray($result);
         $this->assertCount(7, $result);
         $this->assertEquals($sampleData[0]['name'], $result[0]['name']);

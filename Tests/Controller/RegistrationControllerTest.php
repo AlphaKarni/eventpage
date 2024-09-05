@@ -9,14 +9,15 @@ class RegistrationControllerTest extends TestCase
 {
     public string $testFilePath;
     private $controller;
+    private $latte;
 
     protected function setUp(): void
     {
         session_start();
         parent::setUp();
 
-        $this->testFilePath = '/usertest.json';
-
+        $this->testFilePath = __DIR__ . '/usertest.json';
+        $this->latte = new Latte\Engine;
 
         $this->controller = new RegistrationController($this->testFilePath);
     }
@@ -32,8 +33,6 @@ class RegistrationControllerTest extends TestCase
 
     public function testLoadRegistrationSuccessful()
     {
-        $latte = new Latte\Engine;
-
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['username'] = 'test';
         $_POST['email'] = 'test@test.com';
@@ -42,12 +41,37 @@ class RegistrationControllerTest extends TestCase
         $this->controller->userRepository = new UserRepository();
         $this->controller->userEntityManager = new UserEntityManager();
 
-        $this->controller->loadRegistration($latte, $this->testFilePath);
+        $this->controller->loadRegistration($this->latte, $this->testFilePath);
 
         $contents = file_get_contents($this->testFilePath);
         $users = json_decode($contents, true);
         $this->assertNotEmpty($users);
         $this->assertEquals('test', $users[0]['username']);
         $this->assertEquals('test@test.com', $users[0]['email']);
+    }
+    public function testLoadRegistrationRegistered()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_POST['username'] = 'test';
+        $_POST['email'] = 'test@test.com';
+        $_POST['password'] = 'test123';
+
+        $user[] = [
+            'username' => 'test',
+            'email' => 'test@test.com',
+            'password' => 'test123'
+        ];
+        file_put_contents($this->testFilePath, json_encode($user, JSON_PRETTY_PRINT));
+
+        $this->controller->userRepository = new UserRepository();
+        $this->controller->userEntityManager = new UserEntityManager();
+
+        $this->controller->loadRegistration($this->latte, $this->testFilePath);
+
+        $contents = file_get_contents($this->testFilePath);
+        $users = json_decode($contents, true);
+        $this->assertNotEmpty($users);
+        $this->assertTrue($_SESSION['emailalreadyregistered']);
+        $this->assertTrue($_SESSION["usernamealreadyregistered"]);
     }
 }

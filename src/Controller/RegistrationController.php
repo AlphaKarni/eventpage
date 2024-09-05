@@ -32,22 +32,18 @@ class RegistrationController
                 'password' => $hashed_password
             ];
 
-            $emailregistered = true;
-            $usernameregistered = true;
+            $_SESSION["emailalreadyregistered"] = false;
+            $_SESSION["usernamealreadyregistered"] = false;
 
-            if (empty($luseremail)) {
-                $emailregistered = false;
-            } else {
-                $_SESSION['displayemailregistered'] = true;
+            if (!empty($luseremail)) {
+                $_SESSION['emailalreadyregistered'] = true;
             }
 
-            if (empty($luserusername)) {
-                $usernameregistered = false;
-            } else {
-                $_SESSION['displayusernameregistered'] = true;
+            if (!empty($luserusername)) {
+                $_SESSION['usernamealreadyregistered'] = true;
             }
 
-            if (($emailregistered) === false && ($usernameregistered === false)) {
+            if (($_SESSION["emailalreadyregistered"]) === false && ($_SESSION["usernamealreadyregistered"] === false)) {
                 $user_json = file_get_contents($userFilePath);
                 $users = json_decode($user_json,true);
                 $users[] = $user_data;

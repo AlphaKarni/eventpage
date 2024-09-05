@@ -31,7 +31,7 @@ class UserEntityManagerTest extends TestCase
             ['username' => "test2", 'email' => 'test2@test.com']
         ];
 
-        $this->userEntityManager->saveUsers($this->userFilePath, $users);
+        $this->userEntityManager->saveUsers($users,$this->userFilePath,);
         $this->assertFileExists($this->userFilePath);
 
         $content = file_get_contents($this->userFilePath);

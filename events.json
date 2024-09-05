@@ -1,22 +1,11 @@
 [
     {
         "name": "test",
-        "date": "2024-08-30",
-        "desc": "teste",
-        "maxpers": "13",
+        "date": "2999-12-12",
+        "desc": "testtest",
+        "maxpers": "10",
         "id": 0,
-        "joined_pers": 1,
-        "joined_user_usernames": [
-            "Mustafa"
-        ]
-    },
-    {
-        "name": "Bambus",
-        "date": "2025-04-23",
-        "desc": "Bambus ist Gr\u00fcn",
-        "maxpers": "20",
-        "id": 1,
-        "joined_pers": 0,
+        "joined_pers": -1,
         "joined_user_usernames": []
     }
 ]

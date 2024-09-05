@@ -27,17 +27,17 @@ class HomeController
         $this->eventValidation = new EventValidation();
     }
 
-    public function loadEventSignup($latte): void
+    public function loadEventSignup($latte,$eventFilePath)
     {
-        $events = $this->eventRepository->findAllEvents();
+        $events = $this->eventRepository->findAllEvents($eventFilePath);
 
         if ($_SESSION["logged_in"] === true && (isset($_GET["joinevent"]))) {
             $eevent = $_GET["joinevent"];
-            $this->eventEntityManager->joinEvent($events, $eevent);
+            $this->eventEntityManager->joinEvent($events, $eevent, $eventFilePath);
         }
         if ($_SESSION["logged_in"] === true && (isset($_GET["leaveevent"]))) {
             $eevent = $_GET["leaveevent"];
-            $this->eventEntityManager->leaveEvent($events, $eevent);
+            $this->eventEntityManager->leaveEvent($events, $eevent,$eventFilePath);
         }
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -48,15 +48,15 @@ class HomeController
                 "maxpers" => $_POST["maxpers"],
                 "id" => count($events),
                 "joined_pers" => 0,
-                "joined_user_usernames" => [],
+                "joined_user_usernames" => []
             ];
 
             $result = $this->eventValidation->validateEvent($events, $validateEvent);
             if (count($result) === 4) {
                 $errors = $result;
+                return $errors;
             } else {
-                $events = $result;
-                $this->eventEntityManager->saveEvents($events);
+                $this->eventEntityManager->saveEvents($result,$eventFilePath);
             }
         }
         $params = [

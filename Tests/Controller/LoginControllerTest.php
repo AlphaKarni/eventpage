@@ -9,6 +9,7 @@ class LoginControllerTest extends TestCase
 {
     private $controller;
     private $userRepositoryMock;
+    private $userFilePath;
 
     protected function setUp(): void
     {
@@ -17,6 +18,7 @@ class LoginControllerTest extends TestCase
         $this->userRepositoryMock = $this->createMock(UserRepository::class);
         $this->controller = new LoginController();
         $this->controller->userRepository = $this->userRepositoryMock;
+        $this->userFilePath = __DIR__ . "/../../user.json";
     }
 
     protected function tearDown(): void
@@ -43,7 +45,7 @@ class LoginControllerTest extends TestCase
 
         $this->userRepositoryMock->method('findByEmail')->willReturn($userData);
 
-        $this->controller->loadLogin($latte);
+        $this->controller->loadLogin($latte,$this->userFilePath);
 
         $this->assertTrue($_SESSION["logged_in"]);
         $this->assertEquals('testuser', $_SESSION['username']);
@@ -67,7 +69,7 @@ class LoginControllerTest extends TestCase
 
         $this->userRepositoryMock->method('findByEmail')->willReturn($userData);
 
-        $this->controller->loadLogin($latte);
+        $this->controller->loadLogin($latte, $this->userFilePath);
 
 
         $this->assertFalse($_SESSION["logged_in"]);
@@ -83,7 +85,7 @@ class LoginControllerTest extends TestCase
 
         $this->userRepositoryMock->method('findByEmail')->willReturn([]);
 
-        $this->controller->loadLogin($latte);
+        $this->controller->loadLogin($latte,$this->userFilePath);
 
         $this->assertFalse($_SESSION['logged_in']);
     }

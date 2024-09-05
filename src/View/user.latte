@@ -12,10 +12,10 @@
 
     <p><a href="http://localhost:8000/index.php">Event SignUp</a> -> User Registration ->
         <a href="http://localhost:8000/?page=login">Login</a></p>
-        {if $_SESSION['displayemailregistered'] === true}
+        {if $_SESSION['emailalreadyregistered'] === true}
         <p style ='color:red'>Email already registered</p>
         {/if}
-        {if $_SESSION["displayusernameregistered"] === true}
+        {if $_SESSION["usernamealreadyregistered"] === true}
         <p style ='color:red'>Username already registered</p>
         {/if}
     <label for="username">Username:</label>

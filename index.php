@@ -34,7 +34,7 @@ switch ($page) {
         break;
 
     default: new HomeController();
-        (new HomeController)->loadEventSignup($latte);
+        (new HomeController)->loadEventSignup($latte, $eventFilePath);
         break;
 }
 
