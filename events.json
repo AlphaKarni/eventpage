@@ -5,7 +5,7 @@
         "desc": "testtest",
         "maxpers": "10",
         "id": 0,
-        "joined_pers": -1,
+        "joined_pers": 0,
         "joined_user_usernames": []
     }
 ]

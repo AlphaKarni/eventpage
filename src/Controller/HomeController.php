@@ -39,8 +39,8 @@ class HomeController
             $eevent = $_GET["leaveevent"];
             $this->eventEntityManager->leaveEvent($events, $eevent,$eventFilePath);
         }
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
+        if ($_SERVER["REQUEST_METHOD"] === "POST")
+        {
             $validateEvent = [
                 "name" => $_POST["name"],
                 "date" => $_POST["date"],
@@ -65,6 +65,5 @@ class HomeController
             "username" => $_SESSION["username"],
         ];
         $latte->render(__dir__ . '/../View/index.latte', $params);
-
     }
 }
