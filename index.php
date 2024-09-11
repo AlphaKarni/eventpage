@@ -4,34 +4,45 @@ use App\Controller\HomeController;
 use App\Controller\LoginController;
 use App\Controller\LogoutController;
 use App\Controller\RegistrationController;
+use App\Core\View;
+use App\Model\EventRepository;
+use App\Model\EventEntityManager;
+use App\Model\UserRepository;
+use App\Model\UserEntityManager;
+use App\Core\EventValidation;
 
 session_start();
 require_once __DIR__ . '/vendor/autoload.php';
 
-require_once __DIR__ . "/src/Controller/HomeController.php";
-require_once __DIR__ . '/src/Controller/LoginController.php';
-require_once __DIR__ . '/src/Controller/LogoutController.php';
-require_once __DIR__ . '/src/Controller/RegistrationController.php';
-
-$latte = new Latte\Engine;
+$view = new View();
 $eventFilePath = __DIR__ . '/events.json';
 $userFilePath = __DIR__ . '/user.json';
-$page = $_GET['page'];
+$page = $_GET['page'] ?? 'home';
 
 switch ($page) {
-    case 'login': new LoginController();
-        (new LoginController)->loadLogin($latte,$userFilePath);
+    case 'login':
+        $userRepository = new UserRepository();
+        $controller = new LoginController($userRepository, $view);
+        $controller->loadLogin($userFilePath);
         break;
 
-    case 'register': new RegistrationController();
-        (new RegistrationController)->loadRegistration($latte,$userFilePath);
+    case 'register':
+        $userRepository = new UserRepository();
+        $userEntityManager = new UserEntityManager();
+        $controller = new RegistrationController($userRepository, $userEntityManager, $view);
+        $controller->loadRegistration($userFilePath);
         break;
 
     case 'logout':
-        (new LogoutController)->loadLogout();
+        $controller = new LogoutController($view);
+        $controller->loadLogout();
         break;
 
-    default: new HomeController();
-        (new HomeController)->loadEventSignup($latte, $eventFilePath);
+    default:
+        $eventRepository = new EventRepository();
+        $eventEntityManager = new EventEntityManager();
+        $eventValidation = new EventValidation();
+        $controller = new HomeController($eventRepository, $eventEntityManager, $eventValidation, $view);
+        $controller->loadEventSignup($eventFilePath);
         break;
 }

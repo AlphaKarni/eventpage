@@ -4,27 +4,31 @@ namespace App\Model;
 
 class EventEntityManager
 {
-    public function joinEvent($events,$eevent, $eventFilePath)
+    public function joinEvent(array $events, int $eevent, string $eventFilePath): void
     {
         $events[$eevent]["joined_pers"]++;
         $events[$eevent]["joined_user_usernames"][] = $_SESSION["username"];
-        $this->saveEvents($events,$eventFilePath);
+        $this->saveEvents($events, $eventFilePath);
     }
-    public function leaveEvent($events,$eevent, $eventFilePath)
+
+    public function leaveEvent(array $events, int $eevent, string $eventFilePath): void
     {
         $events[$eevent]["joined_pers"]--;
         $key = array_search($_SESSION["username"], $events[$eevent]["joined_user_usernames"], true);
-        unset ($events[$eevent]["joined_user_usernames"][$key]);
-        $this->saveEvents($events,$eventFilePath);
+        unset($events[$eevent]["joined_user_usernames"][$key]);
+        $this->saveEvents($events, $eventFilePath);
     }
-    public function saveEvents($events, $eventFilePath)
+
+    public function saveEvents(array $events, string $eventFilePath): void
     {
         file_put_contents($eventFilePath, json_encode($events, JSON_PRETTY_PRINT));
-        header('Location: '."http://localhost:8000/index.php");
+        header('Location: /index.php');
+        exit();
     }
-    public function deleteEvent($events,$eventFilePath,$deleteEvent)
+
+    public function deleteEvent(array &$events, string $eventFilePath, int $deleteEvent): void
     {
-        unset ($events[$deleteEvent]);
-        $this->saveEvents($events,$eventFilePath);
+        unset($events[$deleteEvent]);
+        $this->saveEvents($events, $eventFilePath);
     }
 }

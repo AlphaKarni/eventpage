@@ -2,20 +2,24 @@
 
 namespace App\Controller;
 
-use App\Model\UserEntityManager;
+use App\Core\ViewInterface;
 use App\Model\UserRepository;
-
+use App\Model\UserEntityManager;
 
 class RegistrationController
 {
-    public UserRepository $userRepository;
-    public UserEntityManager $userEntityManager;
-    public function __construct($userFilePath = null)
+    private UserRepository $userRepository;
+    private UserEntityManager $userEntityManager;
+    private ViewInterface $view;
+
+    public function __construct(UserRepository $userRepository, UserEntityManager $userEntityManager, ViewInterface $view)
     {
-        $this->userRepository = new UserRepository();
-        $this->userEntityManager = new UserEntityManager();
+        $this->userRepository = $userRepository;
+        $this->userEntityManager = $userEntityManager;
+        $this->view = $view;
     }
-    public function loadRegistration($latte, $userFilePath): void
+
+    public function loadRegistration(string $userFilePath): void
     {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $checkusername = htmlspecialchars($_POST['username']);
@@ -32,26 +36,18 @@ class RegistrationController
                 'password' => $hashed_password
             ];
 
-            $_SESSION["emailalreadyregistered"] = false;
-            $_SESSION["usernamealreadyregistered"] = false;
+            $_SESSION["emailalreadyregistered"] = !empty($luseremail);
+            $_SESSION["usernamealreadyregistered"] = !empty($luserusername);
 
-            if (!empty($luseremail)) {
-                $_SESSION['emailalreadyregistered'] = true;
-            }
-
-            if (!empty($luserusername)) {
-                $_SESSION['usernamealreadyregistered'] = true;
-            }
-
-            if (($_SESSION["emailalreadyregistered"]) === false && ($_SESSION["usernamealreadyregistered"] === false)) {
+            if (!$_SESSION["emailalreadyregistered"] && !$_SESSION["usernamealreadyregistered"]) {
                 $user_json = file_get_contents($userFilePath);
-                $users = json_decode($user_json,true);
+                $users = json_decode($user_json, true);
                 $users[] = $user_data;
-                $this->userEntityManager->saveUsers($users,$userFilePath);
-               header('Location: ' . "http://localhost:8000/index.php/?page=login");
+                $this->userEntityManager->saveUsers($users, $userFilePath);
+                header('Location: /index.php?page=login');
+                exit();
             }
         }
-        $params = [];
-        $latte->render(__DIR__ . '/../View/user.latte', $params);
+        $this->view->display(__DIR__ . '/../View/user.latte');
     }
 }

@@ -2,23 +2,25 @@
 
 namespace App\Controller;
 
+use App\Core\ViewInterface;
 use App\Model\UserRepository;
-
-require_once __DIR__ . '/../Model/UserRepository.php';
 
 class LoginController
 {
-    public UserRepository $userRepository;
-    public function __construct()
+    private UserRepository $userRepository;
+    private ViewInterface $view;
+
+    public function __construct(UserRepository $userRepository, ViewInterface $view)
     {
-        $this->userRepository = new UserRepository();
+        $this->userRepository = $userRepository;
+        $this->view = $view;
     }
-    function loadLogin($latte, $userFilePath): void
+
+    public function loadLogin(string $userFilePath): void
     {
         $_SESSION["logged_in"] = false;
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $checkmail = htmlspecialchars($_POST['email']);
-
             $luser = $this->userRepository->findByEmail($checkmail, $userFilePath);
             if (!empty($luser)) {
                 $password = $_POST['password'];
@@ -27,16 +29,15 @@ class LoginController
                     $_SESSION['username'] = $luser['username'];
                     $_SESSION['email'] = $luser['email'];
 
-                    header('Location: ' . "http://localhost:8000/index.php");
+                    header('Location: /index.php');
+                    exit();
                 } else {
                     echo "Wrong password";
                 }
             } else {
                 echo "Email Not Found!";
             }
-
         }
-        $params = [];
-        $latte->render(__DIR__ . '/../View/login.latte', $params);
+        $this->view->display(__DIR__ . '/../View/login.latte');
     }
 }

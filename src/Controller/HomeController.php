@@ -1,46 +1,49 @@
 <?php
-/** @noinspection ALL */
 
 namespace App\Controller;
 
-use App\Model\EventEntityManager;
 use App\Model\EventRepository;
+use App\Model\EventEntityManager;
 use App\Core\EventValidation;
-
-use function PHPUnit\Framework\assertSame;
-
-require_once __DIR__ . '/../Model/EventRepository.php';
-require_once __DIR__ . '/../Model/EventEntityManager.php';
-require_once __DIR__ . '/../Core/EventValidation.php';
-
+use App\Core\ViewInterface;
 
 class HomeController
 {
-    public EventRepository $eventRepository;
-    public EventEntityManager $eventEntityManager;
-    public EventValidation $eventValidation;
+    private EventRepository $eventRepository;
+    private EventEntityManager $eventEntityManager;
+    private EventValidation $eventValidation;
+    private ViewInterface $view;
 
-    public function __construct($filePath = null)
-    {
-        $this->eventRepository = new EventRepository();
-        $this->eventEntityManager = new EventEntityManager();
-        $this->eventValidation = new EventValidation();
+    public function __construct(
+        EventRepository $eventRepository,
+        EventEntityManager $eventEntityManager,
+        EventValidation $eventValidation,
+        ViewInterface $view
+    ) {
+        $this->eventRepository = $eventRepository;
+        $this->eventEntityManager = $eventEntityManager;
+        $this->eventValidation = $eventValidation;
+        $this->view = $view;
     }
 
-    public function loadEventSignup($latte,$eventFilePath)
+    public function loadEventSignup(string $eventFilePath): void
     {
         $events = $this->eventRepository->findAllEvents($eventFilePath);
+        $errors = [];
 
-        if ($_SESSION["logged_in"] === true && (isset($_GET["joinevent"]))) {
-            $eevent = $_GET["joinevent"];
-            $this->eventEntityManager->joinEvent($events, $eevent, $eventFilePath);
+        if ($_SESSION["logged_in"] === true) {
+            if (isset($_GET["joinevent"])) {
+                $eventId = $_GET["joinevent"];
+                $this->eventEntityManager->joinEvent($events, $eventId, $eventFilePath);
+            }
+
+            if (isset($_GET["leaveevent"])) {
+                $eventId = $_GET["leaveevent"];
+                $this->eventEntityManager->leaveEvent($events, $eventId, $eventFilePath);
+            }
         }
-        if ($_SESSION["logged_in"] === true && (isset($_GET["leaveevent"]))) {
-            $eevent = $_GET["leaveevent"];
-            $this->eventEntityManager->leaveEvent($events, $eevent,$eventFilePath);
-        }
-        if ($_SERVER["REQUEST_METHOD"] === "POST")
-        {
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $validateEvent = [
                 "name" => $_POST["name"],
                 "date" => $_POST["date"],
@@ -52,18 +55,18 @@ class HomeController
             ];
 
             $result = $this->eventValidation->validateEvent($events, $validateEvent);
-            if (count($result) === 4) {
-                $errors = $result;
+            if (count($result) !== 4) {
+                $this->eventEntityManager->saveEvents($result, $eventFilePath);
             } else {
-                $this->eventEntityManager->saveEvents($result,$eventFilePath);
+                $errors = $result;
             }
         }
-        $params = [
-            'events' => $events,
-            "errors" => $errors,
-            "logged_in" => $_SESSION["logged_in"],
-            "username" => $_SESSION["username"],
-        ];
-        $latte->render(__dir__ . '/../View/index.latte', $params);
+
+        $this->view->addParameter('events', $events);
+        $this->view->addParameter('errors', $errors);
+        $this->view->addParameter('logged_in', $_SESSION["logged_in"]);
+        $this->view->addParameter('username', $_SESSION["username"]);
+
+        $this->view->display(__DIR__ . '/../View/index.latte');
     }
 }

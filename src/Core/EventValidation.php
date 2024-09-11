@@ -4,7 +4,7 @@ namespace App\Core;
 
 class EventValidation
 {
-    public function validateEvent($events, $validateEvent): array
+    public function validateEvent(array $events, array $validateEvent): array
     {
         $errors = [
             "nameerror" => false,
@@ -31,10 +31,12 @@ class EventValidation
         if ($eventDate < $currentDate) {
             $errors["dateerror"] = true;
         }
+
         if (!array_filter($errors)) {
             $events[] = $validateEvent;
             return $events;
         }
+
         return $errors;
     }
 }
