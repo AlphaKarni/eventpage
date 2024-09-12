@@ -16,7 +16,6 @@ class EventRepository
     {
         return file_exists($eventFilePath);
     }
-
     public function loadEvents(string $eventFilePath): array
     {
         return json_decode(file_get_contents($eventFilePath), true);

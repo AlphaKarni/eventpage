@@ -2,9 +2,11 @@
 
 namespace App\Core;
 
+use App\Model\DTOs\eventDTO;
+
 class EventValidation
 {
-    public function validateEvent(array $events, array $validateEvent): array
+    public function validateEvent(array $events, EventDTO $validateEvent): array
     {
         $errors = [
             "nameerror" => false,

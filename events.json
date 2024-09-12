@@ -7,5 +7,14 @@
         "id": 0,
         "joined_pers": 0,
         "joined_user_usernames": []
+    },
+    {
+        "name": "12345",
+        "date": "2024-09-27",
+        "desc": "123456",
+        "maxpers": "12345",
+        "id": 1,
+        "joined_pers": 0,
+        "joined_user_usernames": []
     }
 ]

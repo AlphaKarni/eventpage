@@ -6,25 +6,18 @@ use App\Model\EventRepository;
 use App\Model\EventEntityManager;
 use App\Core\EventValidation;
 use App\Core\ViewInterface;
+use App\Model\Mapper\EventMapper;
 
 class HomeController
 {
-    private EventRepository $eventRepository;
-    private EventEntityManager $eventEntityManager;
-    private EventValidation $eventValidation;
-    private ViewInterface $view;
 
     public function __construct(
-        EventRepository $eventRepository,
-        EventEntityManager $eventEntityManager,
-        EventValidation $eventValidation,
-        ViewInterface $view
-    ) {
-        $this->eventRepository = $eventRepository;
-        $this->eventEntityManager = $eventEntityManager;
-        $this->eventValidation = $eventValidation;
-        $this->view = $view;
-    }
+        public EventRepository $eventRepository,
+        public EventEntityManager $eventEntityManager,
+        public EventValidation $eventValidation,
+        public ViewInterface $view,
+        public EventMapper $eventMapper
+    ) {}
 
     public function loadEventSignup(string $eventFilePath): void
     {
@@ -53,20 +46,33 @@ class HomeController
                 "joined_pers" => 0,
                 "joined_user_usernames" => []
             ];
+            $eventDTO = $this->eventMapper->getEventDTOs($validateEvent);
 
-            $result = $this->eventValidation->validateEvent($events, $validateEvent);
+            $result = $this->eventValidation->validateEvent($events, $eventDTO);
             if (count($result) !== 4) {
                 $this->eventEntityManager->saveEvents($result, $eventFilePath);
+                header('Location: /index.php?');
+
             } else {
                 $errors = $result;
             }
         }
 
+        if (isset($_GET["details"]))
+        {
+            $eventId = $_GET["details"];
+            $event = $events[$eventId];
+            $this->view->addParameter('event', $event);
+            $this->view->addParameter('logged_in', $_SESSION["logged_in"]);
+            $this->view->addParameter('username', $eventId);
+            $this->view->display(__DIR__ . '/../View/event.latte');
+            exit();
+        }
         $this->view->addParameter('events', $events);
         $this->view->addParameter('errors', $errors);
         $this->view->addParameter('logged_in', $_SESSION["logged_in"]);
         $this->view->addParameter('username', $_SESSION["username"]);
 
-        $this->view->display(__DIR__ . '/../View/index.latte');
+        $this->view->display(__DIR__ . '/../View/homepage.latte');
     }
 }

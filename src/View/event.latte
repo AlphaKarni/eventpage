@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<form action="/index.php" method="POST">
+    <p><a href="http://localhost:8000/index.php">Event SignUp</a> -> Event Details</p>
+    <p>Event Name: {$event['name']}</p>
+    <p>Date: {$event['date']}</p>
+    <p>Description: {$event['desc']}</p>
+    <p>Joined/Max Participants: {$event['joined_pers']} / {$event['maxpers']}</p>
+    {if $event['joined_user_usernames']}
+    <p>Joined Users:<br>
+        {foreach $event['joined_user_usernames'] as $userName}
+             {$userName}<br>
+        {/foreach}
+    </p>
+    {/if}
+</form>
+
+    {if ($logged_in === true)}
+        {foreach $event["joined_user_usernames"] as $users}
+            {if $users === $_SESSION['username']}
+                {var $joinedevent = true}
+            {/if}
+        {/foreach}
+
+        {var $buttonid = $event['id']}
+
+        {if $joinedevent === true}
+            <a href="?leaveevent={$buttonid}">Leave</a>
+        {else}
+            <a href="?joinevent={$buttonid}">Join!</a>
+        {/if}
+    {else}
+        <p style='color:red'>Login if you want to join events</p>
+    {/if}
+</body>
+</html>
