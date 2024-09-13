@@ -2,11 +2,11 @@
 
 namespace App\Core;
 
-use App\Model\DTOs\eventDTO;
+use App\Model\DTOs\EventDTO;
 
 class EventValidation
 {
-    public function validateEvent(array $events, EventDTO $validateEvent): array
+    public function validateEvent(array $events, EventDTO $eventDTO): array
     {
         $errors = [
             "nameerror" => false,
@@ -15,27 +15,27 @@ class EventValidation
             "dateerror" => false,
         ];
 
-        if (strlen(trim($validateEvent['name'])) < 3) {
+        if (strlen(trim($eventDTO->name)) < 3) {
             $errors["nameerror"] = true;
         }
 
-        if (strlen(trim($validateEvent['desc'])) < 5) {
+        if (strlen(trim($eventDTO->desc)) < 5) {
             $errors["descerror"] = true;
         }
 
-        if (!is_numeric($validateEvent['maxpers']) || $validateEvent['maxpers'] <= 1) {
+        if (!is_numeric($eventDTO->maxPers) || $eventDTO->maxPers <= 1) {
             $errors["maxperserror"] = true;
         }
 
         $currentDate = new \DateTime();
-        $eventDate = \DateTime::createFromFormat('Y-m-d', $validateEvent['date']);
+        $eventDate = \DateTime::createFromFormat('Y-m-d', $eventDTO->date);
 
         if ($eventDate < $currentDate) {
             $errors["dateerror"] = true;
         }
 
         if (!array_filter($errors)) {
-            $events[] = $validateEvent;
+            $events[] = $eventDTO;
             return $events;
         }
 

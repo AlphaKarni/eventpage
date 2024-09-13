@@ -29,8 +29,8 @@
     <textarea name="desc" rows="1" cols="30" required id="desc"></textarea>
     <br>
 
-    <label for="maxpers">Maximum Number of People:</label>
-    <input type="number" id="maxpers" name="maxpers" min="1" required>
+    <label for="maxPers">Maximum Number of People:</label>
+    <input type="number" id="maxPers" name="maxPers" min="1" required>
     <br>
 
     <input type="submit" value="Submit" name="Event">
@@ -55,7 +55,7 @@
     {var $joinedevent = false}
     <p>------------------------------------------------------------</p>
     <p>Event Name: {$event['name']}
-        {foreach $event["joined_user_usernames"] as $users}
+        {foreach $event["joinedUserUsernames"] as $users}
             {if $users === $_SESSION['username']}
                 {var $joinedevent = true}
             {/if}
@@ -64,16 +64,16 @@
             {else}
             {/if}
         {/foreach}
-
     </p>
+
     <p>Date: {$event['date']}</p>
     <p>Description: {$event['desc']}</p>
-    <p>Joined/Max Participants: {$event['joined_pers']} / {$event['maxpers']}</p>
+    <p>Joined/Max Participants: {$event['joinedPers']} / {$event['maxPers']}</p>
     {if $logged_in === true}
         <a href="?details={$buttonid}">Event Details<br></a>
     {/if}
-    {if $_SESSION["logged_in"] === true && $event['maxpers'] > $event['joined_pers']}
-        {foreach $event["joined_user_usernames"] as $username}
+    {if $_SESSION["logged_in"] === true && $event['maxPers'] > $event['joinedPers']}
+        {foreach $event["joinedUserUsernames"] as $username}
             {if $username === $_SESSION["username"]}
                 {var $joinedevent = true}
             {/if}

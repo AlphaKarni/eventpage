@@ -3,18 +3,37 @@
         "name": "test",
         "date": "2999-12-12",
         "desc": "testtest",
-        "maxpers": "10",
+        "maxPers": "10",
         "id": 0,
-        "joined_pers": 0,
-        "joined_user_usernames": []
+        "joinedPers": 0,
+        "joinedUserUsernames": [],
+        "joined_pers": 3,
+        "joined_user_usernames": [
+            "Mustafa",
+            "Mustafa",
+            "Mustafa"
+        ]
     },
     {
         "name": "12345",
         "date": "2024-09-27",
         "desc": "123456",
-        "maxpers": "12345",
+        "maxPers": "12345",
         "id": 1,
-        "joined_pers": 0,
-        "joined_user_usernames": []
+        "joinedPers": 0,
+        "joinedUserUsernames": []
+    },
+    {
+        "name": "12312312",
+        "date": "2024-09-20",
+        "desc": "123123123",
+        "maxPers": 123123123,
+        "id": 2,
+        "joinedPers": 0,
+        "joinedUserUsernames": [],
+        "joined_pers": 1,
+        "joined_user_usernames": [
+            "Mustafa"
+        ]
     }
 ]

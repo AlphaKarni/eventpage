@@ -2,22 +2,23 @@
 
 namespace App\Model\Mapper;
 
-use App\Model\DTOs\eventDTO;
+use App\Model\DTOs\EventDTO;
 
 class EventMapper
 {
-    public function getEventDTO(array $events): eventDTO
+    public function getEventDTO(array $events): EventDTO
     {
-        return new eventDTO(
+        return new EventDTO(
             $events["name"],
             $events["date"],
             $events["desc"],
             $events["maxPers"],
             $events["id"],
-            $events["joinedPers"]
+            $events["joinedPers"],
+            $events["joinedUserUsernames"]
         );
     }
-    public function getEventsArray(eventDTO $eventDTO): array
+    public function getEventsArray(EventDTO $eventDTO): array
     {
         return [
             "name" => $eventDTO->name,

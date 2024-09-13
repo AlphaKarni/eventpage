@@ -2,20 +2,22 @@
 
 namespace App\Model;
 
+use App\Model\DTOs\EventDTO;
+
 class EventEntityManager
 {
     public function joinEvent(array $events, int $eevent, string $eventFilePath): void
     {
-        $events[$eevent]["joined_pers"]++;
-        $events[$eevent]["joined_user_usernames"][] = $_SESSION["username"];
+        $events[$eevent]["joinedPers"]++;
+        $events[$eevent]["joinedUserUsernames"][] = $_SESSION["username"];
         $this->saveEvents($events, $eventFilePath);
         header('Location: /index.php?details=' . $eevent);
     }
     public function leaveEvent(array $events, int $eevent, string $eventFilePath): void
     {
-        $events[$eevent]["joined_pers"]--;
-        $key = array_search($_SESSION["username"], $events[$eevent]["joined_user_usernames"], true);
-        unset($events[$eevent]["joined_user_usernames"][$key]);
+        $events[$eevent]["joinedPers"]--;
+        $key = array_search($_SESSION["username"], $events[$eevent]["joinedUserUsernames"], true);
+        unset($events[$eevent]["joinedUserUsernames"][$key]);
         $this->saveEvents($events, $eventFilePath);
         header('Location: /index.php?details=' . $eevent);
     }

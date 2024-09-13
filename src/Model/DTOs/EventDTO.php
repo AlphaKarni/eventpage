@@ -2,7 +2,7 @@
 
 namespace App\Model\DTOs;
 
-class eventDTO
+class EventDTO
 {
     public function __construct(
         public string $name,
@@ -10,7 +10,8 @@ class eventDTO
         public string $desc,
         public int $maxPers,
         public int $id,
-        public int $joinedPers
+        public int $joinedPers,
+        public array $joinedUserUsernames = []
     ) {
     }
 }

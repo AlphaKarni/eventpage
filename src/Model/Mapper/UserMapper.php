@@ -2,12 +2,12 @@
 
 namespace App\Model\Mapper;
 
-use App\Model\DTOs\eventDTO;
+use App\Model\DTOs\EventDTO;
 
 class UserMapper
 {
-    public function getEventDTOs(array $events): eventDTO{
-        return new eventDTO($events);
+    public function getEventDTOs(array $events): EventDTO{
+        return new EventDTO($events);
 
     }
 }

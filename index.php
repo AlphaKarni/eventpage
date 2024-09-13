@@ -10,6 +10,8 @@ use App\Model\EventEntityManager;
 use App\Model\UserRepository;
 use App\Model\UserEntityManager;
 use App\Core\EventValidation;
+use App\Model\Mapper\EventMapper;
+use App\Model\DTOs\EventDTO;
 
 session_start();
 require_once __DIR__ . '/vendor/autoload.php';
@@ -42,7 +44,8 @@ switch ($page) {
         $eventRepository = new EventRepository();
         $eventEntityManager = new EventEntityManager();
         $eventValidation = new EventValidation();
-        $controller = new HomeController($eventRepository, $eventEntityManager, $eventValidation, $view);
+        $eventMapper = new EventMapper();
+        $controller = new HomeController($eventRepository, $eventEntityManager, $eventValidation, $view, $eventMapper);
         $controller->loadEventSignup($eventFilePath);
         break;
 }

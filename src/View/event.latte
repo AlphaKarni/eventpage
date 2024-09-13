@@ -10,10 +10,10 @@
     <p>Event Name: {$event['name']}</p>
     <p>Date: {$event['date']}</p>
     <p>Description: {$event['desc']}</p>
-    <p>Joined/Max Participants: {$event['joined_pers']} / {$event['maxpers']}</p>
-    {if $event['joined_user_usernames']}
+    <p>Joined/Max Participants: {$event['joinedPers']} / {$event['maxPers']}</p>
+    {if $event['joinedUserUsernames']}
     <p>Joined Users:<br>
-        {foreach $event['joined_user_usernames'] as $userName}
+        {foreach $event['joinedUserUsernames'] as $userName}
              {$userName}<br>
         {/foreach}
     </p>
@@ -21,7 +21,7 @@
 </form>
 
     {if ($logged_in === true)}
-        {foreach $event["joined_user_usernames"] as $users}
+        {foreach $event["joinedUserUsernames"] as $users}
             {if $users === $_SESSION['username']}
                 {var $joinedevent = true}
             {/if}
