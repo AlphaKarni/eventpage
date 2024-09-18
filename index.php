@@ -12,6 +12,8 @@ use App\Model\UserEntityManager;
 use App\Core\EventValidation;
 use App\Model\Mapper\EventMapper;
 use App\Model\DTOs\EventDTO;
+use App\Model\Mapper\UserMapper;
+use App\Model\DTOs\UserDTO;
 
 session_start();
 require_once __DIR__ . '/vendor/autoload.php';
@@ -31,7 +33,8 @@ switch ($page) {
     case 'register':
         $userRepository = new UserRepository();
         $userEntityManager = new UserEntityManager();
-        $controller = new RegistrationController($userRepository, $userEntityManager, $view);
+        $userMapper = new UserMapper();
+        $controller = new RegistrationController($userRepository, $userEntityManager, $view, $userMapper);
         $controller->loadRegistration($userFilePath);
         break;
 

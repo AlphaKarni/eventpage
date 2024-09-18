@@ -6,7 +6,7 @@ use App\Model\DTOs\EventDTO;
 
 class EventValidation
 {
-    public function validateEvent(array $events, EventDTO $eventDTO): array
+    public function validateEvent(array $events, EventDTO $eventDTO): bool|array
     {
         $errors = [
             "nameerror" => false,
@@ -35,10 +35,8 @@ class EventValidation
         }
 
         if (!array_filter($errors)) {
-            $events[] = $eventDTO;
-            return $events;
+           return false;
         }
-
         return $errors;
     }
 }

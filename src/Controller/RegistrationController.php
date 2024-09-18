@@ -5,18 +5,16 @@ namespace App\Controller;
 use App\Core\ViewInterface;
 use App\Model\UserRepository;
 use App\Model\UserEntityManager;
+use App\Model\Mapper\UserMapper;
 
 class RegistrationController
 {
-    private UserRepository $userRepository;
-    private UserEntityManager $userEntityManager;
-    private ViewInterface $view;
-
-    public function __construct(UserRepository $userRepository, UserEntityManager $userEntityManager, ViewInterface $view)
-    {
-        $this->userRepository = $userRepository;
-        $this->userEntityManager = $userEntityManager;
-        $this->view = $view;
+    public function __construct(
+        public UserRepository $userRepository,
+        public UserEntityManager $userEntityManager,
+        public ViewInterface $view,
+        public UserMapper $userMapper,
+    ) {
     }
 
     public function loadRegistration(string $userFilePath): void
@@ -36,13 +34,16 @@ class RegistrationController
                 'password' => $hashed_password
             ];
 
+
+            $userDTO = $this->userMapper->getUserDTO($user_data);
+
             $_SESSION["emailalreadyregistered"] = !empty($luseremail);
             $_SESSION["usernamealreadyregistered"] = !empty($luserusername);
 
             if (!$_SESSION["emailalreadyregistered"] && !$_SESSION["usernamealreadyregistered"]) {
-                $user_json = file_get_contents($userFilePath);
-                $users = json_decode($user_json, true);
-                $users[] = $user_data;
+                $users_json = file_get_contents($userFilePath);
+                $users = json_decode($users_json, true);
+                $users[] = $userDTO;
                 $this->userEntityManager->saveUsers($users, $userFilePath);
                 header('Location: /index.php?page=login');
                 exit();

@@ -7,7 +7,6 @@ use App\Model\EventEntityManager;
 use App\Core\EventValidation;
 use App\Core\ViewInterface;
 use App\Model\Mapper\EventMapper;
-use App\Model\DTOs\EventDTO;
 
 class HomeController
 {
@@ -24,7 +23,6 @@ class HomeController
     {
         $events = $this->eventRepository->findAllEvents($eventFilePath);
         $errors = [];
-        print_r($events);
         if ($_SESSION["logged_in"] === true) {
             if (isset($_GET["joinevent"])) {
                 $eventId = $_GET["joinevent"];
@@ -38,6 +36,7 @@ class HomeController
         }
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
             $validateEvent = [
                 "name" => $_POST["name"],
                 "date" => $_POST["date"],
@@ -51,8 +50,9 @@ class HomeController
             $eventDTO = $this->eventMapper->getEventDTO($validateEvent);
 
             $result = $this->eventValidation->validateEvent($events, $eventDTO);
-            if (count($result) !== 4) {
-                $this->eventEntityManager->saveEvents($result, $eventFilePath);
+            if ($result === false) {
+                $events[] = $eventDTO;
+                $this->eventEntityManager->saveEvents($events, $eventFilePath);
                 header('Location: /index.php?');
 
             } else {

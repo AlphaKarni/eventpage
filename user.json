@@ -8,5 +8,15 @@
         "username": "Mustafa2",
         "email": "2",
         "password": "$2y$10$ACY6mO4mPlEag7aCX3C9wOW4Cv3eMfQo0ZEUEiQHB7RpFJ522sL6q"
+    },
+    {
+        "username": "q",
+        "email": "q",
+        "password": "$2y$10$OSY6OInz9ne2U5ZaOgZ2ieF3lLfbSIGN2XUC8zdCCS3IukzlpMsJa"
+    },
+    {
+        "username": "r",
+        "email": "r",
+        "password": "$2y$10$iwqobpH2Wngm\/RiswolbMOz8zYrMRjdKtO9YylKH67eHI9vMLOH2W"
     }
 ]
