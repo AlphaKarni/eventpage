@@ -23,6 +23,7 @@ class HomeController
     {
         $events = $this->eventRepository->findAllEvents($eventFilePath);
         $errors = [];
+
         if ($_SESSION["logged_in"] === true) {
             if (isset($_GET["joinevent"])) {
                 $eventId = $_GET["joinevent"];
@@ -62,13 +63,10 @@ class HomeController
 
         if (isset($_GET["details"]))
         {
-            $eventId = $_GET["details"];
-            $event = $events[$eventId];
+            $event = $events[$_GET["details"]];
             $this->view->addParameter('event', $event);
             $this->view->addParameter('logged_in', $_SESSION["logged_in"]);
-            $this->view->addParameter('username', $eventId);
             $this->view->display(__DIR__ . '/../View/event.latte');
-            exit();
         }
         $this->view->addParameter('events', $events);
         $this->view->addParameter('errors', $errors);

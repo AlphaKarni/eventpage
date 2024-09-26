@@ -4,30 +4,34 @@ use PHPUnit\Framework\TestCase;
 use App\Controller\RegistrationController;
 use App\Model\UserEntityManager;
 use App\Model\UserRepository;
+use App\Model\Mapper\UserMapper;
+use App\Core\View;
 
 class RegistrationControllerTest extends TestCase
 {
     public string $testFilePath;
     private $controller;
-    private $latte;
 
     protected function setUp(): void
     {
         session_start();
+
         parent::setUp();
 
-        $this->testFilePath = __DIR__ . '/usertest.json';
-        $this->latte = new Latte\Engine;
+        $view = new View();
 
-        $this->controller = new RegistrationController($this->testFilePath);
+        $this->testFilePath = __DIR__ . '/../TestFiles/usertest.json';
+        $userRepository = new UserRepository();
+        $userEntityManager = new UserEntityManager();
+        $userMapper = new UserMapper();
+
+        $this->controller = new RegistrationController($userRepository, $userEntityManager, $view, $userMapper);
+        $this->controller->loadRegistration($this->testFilePath);
     }
 
     protected function tearDown(): void
     {
         session_destroy();
-        if (file_exists($this->testFilePath)) {
-            unlink($this->testFilePath);
-        }
         parent::tearDown();
     }
 
@@ -41,7 +45,7 @@ class RegistrationControllerTest extends TestCase
         $this->controller->userRepository = new UserRepository();
         $this->controller->userEntityManager = new UserEntityManager();
 
-        $this->controller->loadRegistration($this->latte, $this->testFilePath);
+        $this->controller->loadRegistration($this->testFilePath);
 
         $contents = file_get_contents($this->testFilePath);
         $users = json_decode($contents, true);
@@ -49,6 +53,7 @@ class RegistrationControllerTest extends TestCase
         $this->assertEquals('test', $users[0]['username']);
         $this->assertEquals('test@test.com', $users[0]['email']);
     }
+
     public function testLoadRegistrationRegistered()
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
@@ -66,7 +71,7 @@ class RegistrationControllerTest extends TestCase
         $this->controller->userRepository = new UserRepository();
         $this->controller->userEntityManager = new UserEntityManager();
 
-        $this->controller->loadRegistration($this->latte, $this->testFilePath);
+        $this->controller->loadRegistration($this->testFilePath);
 
         $contents = file_get_contents($this->testFilePath);
         $users = json_decode($contents, true);

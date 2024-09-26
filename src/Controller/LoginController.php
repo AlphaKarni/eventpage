@@ -7,14 +7,12 @@ use App\Model\UserRepository;
 
 class LoginController
 {
-    private UserRepository $userRepository;
-    private ViewInterface $view;
 
-    public function __construct(UserRepository $userRepository, ViewInterface $view)
-    {
-        $this->userRepository = $userRepository;
-        $this->view = $view;
-    }
+    public function __construct
+    (
+        public UserRepository $userRepository,
+        public ViewInterface $view
+    ) {}
 
     public function loadLogin(string $userFilePath): void
     {
@@ -24,20 +22,23 @@ class LoginController
             $luser = $this->userRepository->findByEmail($checkmail, $userFilePath);
             if (!empty($luser)) {
                 $password = $_POST['password'];
-                if (password_verify($password, $luser['password'])) {
+                if (password_verify($password, $luser->password)) {
                     $_SESSION["logged_in"] = true;
-                    $_SESSION['username'] = $luser['username'];
-                    $_SESSION['email'] = $luser['email'];
+                    $_SESSION['username'] = $luser->username;
+                    $_SESSION['email'] = $luser->email;
 
                     header('Location: /index.php');
                     exit();
                 } else {
-                    echo "Wrong password";
+                    $perror = true;
+                    $this->view->addParameter('perror', $perror);
                 }
             } else {
-                echo "Email Not Found!";
+                $eerror = true;
+                $this->view->addParameter('eerror', $eerror);
             }
         }
+
         $this->view->display(__DIR__ . '/../View/login.latte');
     }
 }

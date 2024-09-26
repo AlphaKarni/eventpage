@@ -18,5 +18,10 @@
         "username": "r",
         "email": "r",
         "password": "$2y$10$iwqobpH2Wngm\/RiswolbMOz8zYrMRjdKtO9YylKH67eHI9vMLOH2W"
+    },
+    {
+        "username": "123",
+        "email": "123",
+        "password": "$2y$10$uGCedRUA2RuHAhzWsh58z.cUE7HTxI2uf3wTRloI6J8wUd3wQpXmq"
     }
 ]

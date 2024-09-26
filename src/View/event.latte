@@ -12,30 +12,26 @@
     <p>Description: {$event['desc']}</p>
     <p>Joined/Max Participants: {$event['joinedPers']} / {$event['maxPers']}</p>
     {if $event['joinedUserUsernames']}
-    <p>Joined Users:<br>
-        {foreach $event['joinedUserUsernames'] as $userName}
-             {$userName}<br>
-        {/foreach}
-    </p>
+        <p>Joined Users:<br>
+            {foreach $event['joinedUserUsernames'] as $userName}
+                {$userName}<br>
+            {/foreach}
+        </p>
     {/if}
 </form>
 
-    {if ($logged_in === true)}
-        {foreach $event["joinedUserUsernames"] as $users}
-            {if $users === $_SESSION['username']}
-                {var $joinedevent = true}
-            {/if}
-        {/foreach}
-
-        {var $buttonid = $event['id']}
-
-        {if $joinedevent === true}
-            <a href="?leaveevent={$buttonid}">Leave</a>
-        {else}
-            <a href="?joinevent={$buttonid}">Join!</a>
+{foreach $event["joinedUserUsernames"] as $users}
+        {if $users === $_SESSION['username']}
+            {var $joinedevent = true}
         {/if}
-    {else}
-        <p style='color:red'>Login if you want to join events</p>
-    {/if}
+{/foreach}
+
+{var $buttonid = $event['id']}
+
+{if $joinedevent === true}
+        <a href="?leaveevent={$buttonid}">Leave</a>
+{else}  <a href="?joinevent={$buttonid}">Join!</a>
+{/if}
+
 </body>
 </html>

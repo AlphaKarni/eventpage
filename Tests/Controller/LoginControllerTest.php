@@ -3,49 +3,48 @@
 use PHPUnit\Framework\TestCase;
 use App\Controller\LoginController;
 use App\Model\UserRepository;
+use App\Core\ViewInterface;
 
-$latte = new Latte\Engine;
 class LoginControllerTest extends TestCase
 {
     private $controller;
-    private $userRepositoryMock;
-    private $userFilePath;
+    private string $userFilePath;
+    public ViewInterface $view;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->userRepositoryMock = $this->createMock(UserRepository::class);
-        $this->controller = new LoginController();
+        $this->view = $this->createMock(ViewInterface::class);
+        $this->controller = new LoginController($this->userRepositoryMock, $this->view);
         $this->controller->userRepository = $this->userRepositoryMock;
-        $this->userFilePath = __DIR__ . "/../../user.json";
+        $this->userFilePath = __DIR__ . "/../TestFiles/usertest.json";
     }
 
     protected function tearDown(): void
     {
         parent::tearDown();
-        unset($_SERVER['REQUEST_METHOD'], $_POST['email'], $_POST['password']);
+        unset($_SERVER, $_POST);
     }
 
     public function testSuccessfulLogin()
     {
-        $latte = new Latte\Engine;
-
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['email'] = 'test@test.com';
         $_POST['password'] = 'correctpassword';
 
-        $hashedPassword = password_hash('correctpassword', PASSWORD_DEFAULT);
+        $hashedPassword = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
         $userData = [
-            'username' => 'testuser',
+            'username' => 'test',
             'email' => 'test@test.com',
             'password' => $hashedPassword
         ];
 
         $this->userRepositoryMock->method('findByEmail')->willReturn($userData);
 
-        $this->controller->loadLogin($latte,$this->userFilePath);
+        $this->controller->loadLogin($this->userFilePath);
 
         $this->assertTrue($_SESSION["logged_in"]);
         $this->assertEquals('testuser', $_SESSION['username']);
@@ -54,10 +53,8 @@ class LoginControllerTest extends TestCase
 
     public function testIncorrectPassword()
     {
-        $latte = new Latte\Engine;
-
         $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_POST['email'] = 'test@example.com';
+        $_POST['email'] = 'test@test.com';
         $_POST['password'] = 'wrongpassword';
 
         $hashedPassword = password_hash('correctpassword', PASSWORD_DEFAULT);
@@ -69,7 +66,7 @@ class LoginControllerTest extends TestCase
 
         $this->userRepositoryMock->method('findByEmail')->willReturn($userData);
 
-        $this->controller->loadLogin($latte, $this->userFilePath);
+        $this->controller->loadLogin($this->userFilePath);
 
 
         $this->assertFalse($_SESSION["logged_in"]);
@@ -77,7 +74,6 @@ class LoginControllerTest extends TestCase
 
     public function testEmailNotFound()
     {
-        $latte  = new Latte\Engine;
 
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['email'] = 'unknown@example.com';
@@ -85,7 +81,7 @@ class LoginControllerTest extends TestCase
 
         $this->userRepositoryMock->method('findByEmail')->willReturn([]);
 
-        $this->controller->loadLogin($latte,$this->userFilePath);
+        $this->controller->loadLogin($this->userFilePath);
 
         $this->assertFalse($_SESSION['logged_in']);
     }

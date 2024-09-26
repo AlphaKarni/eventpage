@@ -14,7 +14,7 @@ class EventEntityManagerTest extends TestCase
     {
         session_start();
         parent::setUp();
-        $this->testFilePath = __DIR__ . '/test_events.json';
+        $this->testFilePath = __DIR__ . '/../TestFiles/eventtest.json';
     }
     protected function tearDown(): void
     {
@@ -40,12 +40,13 @@ class EventEntityManagerTest extends TestCase
 
         $_SESSION = ["username" => "test"];
 
-        $event = new EventEntityManager($this->testFilePath);
-        $result = $event -> joinEvent($this->events, $this->eevent,);
+        $event = new EventEntityManager;
+        $result = $event -> joinEvent($this->events, $this->eevent, $this->testFilePath);
         $this->assertContains($_SESSION["username"], $result["joined_user_usernames"]);
     }
     public function testLeaveEvent()
     {
+
         $this->events  = [
             [
                 "name" => "test",
@@ -62,8 +63,8 @@ class EventEntityManagerTest extends TestCase
 
         $_SESSION = ["username" => "test"];
 
-        $event = new EventEntityManager($this->testFilePath);
-        $result = $event -> leaveEvent($this->events, $this->eevent);
+        $event = new EventEntityManager;
+        $result = $event -> leaveEvent($this->events, $this->eevent, $this->testFilePath);
         $this->assertNotContains($_SESSION["username"], $result["joined_user_usernames"]);
     }
 }

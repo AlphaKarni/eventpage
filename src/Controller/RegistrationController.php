@@ -19,13 +19,15 @@ class RegistrationController
 
     public function loadRegistration(string $userFilePath): void
     {
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        if ($_SERVER["REQUEST_METHOD"] === "POST")
+        {
             $checkusername = htmlspecialchars($_POST['username']);
             $checkmail = htmlspecialchars($_POST['email']);
             $password = htmlspecialchars($_POST['password']);
 
-            $luseremail = $this->userRepository->findByEmail($checkmail, $userFilePath);
-            $luserusername = $this->userRepository->findByUsername($checkusername, $userFilePath);
+            $luser= $this->userRepository->findByEmail($checkmail, $userFilePath);
+            $luseremail = $luser['email'];
+            $luserusername = $luser['username'];
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
             $user_data = [
@@ -46,7 +48,6 @@ class RegistrationController
                 $users[] = $userDTO;
                 $this->userEntityManager->saveUsers($users, $userFilePath);
                 header('Location: /index.php?page=login');
-                exit();
             }
         }
         $this->view->display(__DIR__ . '/../View/user.latte');

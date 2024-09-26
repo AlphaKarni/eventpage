@@ -16,31 +16,29 @@ class UserRepositoryTest extends TestCase
     public function testFindByEmail()
     {
         $userRepository = new UserRepository();
-        $users = $userRepository->findByEmail("1", $this->userFilePath);
-        $this->assertIsArray($users);
-        $this->assertCount(3, $users);
+        $mail = "1";
+        $users = $userRepository->findByEmail($mail, $this->userFilePath);
+        $this->assertEquals($mail, $users->email);
     }
     public function testFindByEmailfailed()
     {
         $userRepository = new UserRepository();
         $users = $userRepository->findByEmail("notexistent", $this->userFilePath);
-        $this->assertIsArray($users);
-        $this->assertCount(0, $users);
+        $this->assertEmpty($users);
     }
 
     public function testFindByUsername()
     {
         $userRepository = new UserRepository();
-        $users = $userRepository->findByUsername("Mustafa", $this->userFilePath);
-        $this->assertIsArray($users);
-        $this->assertCount(3, $users);
+        $username = "Mustafa";
+        $user = $userRepository->findByUsername($username, $this->userFilePath);
+        $this->assertEquals($username, $user->username);
     }
     public function testFindByUsernamefailed()
     {
         $userRepository = new UserRepository();
         $users = $userRepository->findByUsername("notexistent", $this->userFilePath);
-        $this->assertIsArray($users);
-        $this->assertCount(0, $users);
+        $this->assertEmpty($users);
     }
 
 }

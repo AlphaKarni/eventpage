@@ -5,49 +5,16 @@
         "desc": "testtest",
         "maxPers": "10",
         "id": 0,
-        "joinedPers": 1,
-        "joinedUserUsernames": [
-            "Mustafa"
-        ]
+        "joinedPers": 0,
+        "joinedUserUsernames": []
     },
     {
-        "name": "12345",
-        "date": "2024-09-27",
-        "desc": "123456",
-        "maxPers": "12345",
+        "name": "grill",
+        "date": "2055-12-12",
+        "desc": "wdwdwdwdwd",
+        "maxPers": 123,
         "id": 1,
-        "joinedPers": 1,
-        "joinedUserUsernames": [
-            "Mustafa"
-        ]
-    },
-    {
-        "name": "123",
-        "date": "2024-09-19",
-        "desc": "123123",
-        "maxPers": 123,
-        "id": 2,
         "joinedPers": 0,
         "joinedUserUsernames": []
-    },
-    {
-        "name": "1234",
-        "date": "2024-09-20",
-        "desc": "12345",
-        "maxPers": 12345,
-        "id": 3,
-        "joinedPers": 0,
-        "joinedUserUsernames": []
-    },
-    {
-        "name": "test",
-        "date": "2024-09-20",
-        "desc": "testest",
-        "maxPers": 123,
-        "id": 4,
-        "joinedPers": 1,
-        "joinedUserUsernames": [
-            "Mustafa"
-        ]
     }
 ]

@@ -11,11 +11,9 @@ use App\Model\UserRepository;
 use App\Model\UserEntityManager;
 use App\Core\EventValidation;
 use App\Model\Mapper\EventMapper;
-use App\Model\DTOs\EventDTO;
 use App\Model\Mapper\UserMapper;
-use App\Model\DTOs\UserDTO;
-
 session_start();
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 $view = new View();
@@ -39,7 +37,7 @@ switch ($page) {
         break;
 
     case 'logout':
-        $controller = new LogoutController($view);
+        $controller = new LogoutController();
         $controller->loadLogout();
         break;
 
