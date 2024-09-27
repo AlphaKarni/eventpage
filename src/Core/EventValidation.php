@@ -6,7 +6,7 @@ use App\Model\DTOs\EventDTO;
 
 class EventValidation
 {
-    public function validateEvent(array $events, EventDTO $eventDTO): bool|array
+    public function validateEvent(EventDTO $eventDTO): bool|array
     {
         $errors = [
             "nameerror" => false,
@@ -19,11 +19,11 @@ class EventValidation
             $errors["nameerror"] = true;
         }
 
-        if (strlen(trim($eventDTO->desc)) < 5) {
+        if (strlen(trim($eventDTO->description)) < 5) {
             $errors["descerror"] = true;
         }
 
-        if (!is_numeric($eventDTO->maxPers) || $eventDTO->maxPers <= 1) {
+        if (!is_numeric($eventDTO->maxPeople) || $eventDTO->maxPeople <= 1) {
             $errors["maxperserror"] = true;
         }
 

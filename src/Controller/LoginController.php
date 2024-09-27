@@ -16,14 +16,14 @@ class LoginController
 
     public function loadLogin(string $userFilePath): void
     {
-        $_SESSION["logged_in"] = false;
+        $_SESSION["loggedIn"] = false;
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $checkmail = htmlspecialchars($_POST['email']);
             $luser = $this->userRepository->findByEmail($checkmail, $userFilePath);
             if (!empty($luser)) {
                 $password = $_POST['password'];
                 if (password_verify($password, $luser->password)) {
-                    $_SESSION["logged_in"] = true;
+                    $_SESSION["loggedIn"] = true;
                     $_SESSION['username'] = $luser->username;
                     $_SESSION['email'] = $luser->email;
 

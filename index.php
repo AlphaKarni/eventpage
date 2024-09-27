@@ -5,6 +5,7 @@ use App\Controller\LoginController;
 use App\Controller\LogoutController;
 use App\Controller\RegistrationController;
 use App\Core\View;
+use App\Database\Database;
 use App\Model\EventRepository;
 use App\Model\EventEntityManager;
 use App\Model\UserRepository;
@@ -42,11 +43,12 @@ switch ($page) {
         break;
 
     default:
-        $eventRepository = new EventRepository();
         $eventEntityManager = new EventEntityManager();
+        $eventRepository = new EventRepository();
         $eventValidation = new EventValidation();
         $eventMapper = new EventMapper();
-        $controller = new HomeController($eventRepository, $eventEntityManager, $eventValidation, $view, $eventMapper);
+        $db = new Database();
+        $controller = new HomeController($eventRepository, $eventEntityManager, $eventValidation, $view, $eventMapper,$db);
         $controller->loadEventSignup($eventFilePath);
         break;
 }

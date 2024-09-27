@@ -1,20 +1,22 @@
 [
     {
-        "name": "test",
-        "date": "2999-12-12",
-        "desc": "testtest",
-        "maxPers": "10",
-        "id": 0,
-        "joinedPers": 0,
-        "joinedUserUsernames": []
+        "ID": 0,
+        "Name": "Test",
+        "Date": "2055-12-12",
+        "Description": "No",
+        "Crnt_Ppl": 0,
+        "Max_Ppl": 10,
+        "joinedPers": 1,
+        "joinedUserUsernames": [
+            "Mustafa"
+        ]
     },
     {
-        "name": "grill",
-        "date": "2055-12-12",
-        "desc": "wdwdwdwdwd",
-        "maxPers": 123,
-        "id": 1,
-        "joinedPers": 0,
-        "joinedUserUsernames": []
+        "ID": 1,
+        "Name": "awdawd",
+        "Date": "2024-09-26",
+        "Description": "awefaegersg",
+        "Crnt_Ppl": 2,
+        "Max_Ppl": 123123
     }
 ]

@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Database\Database;
 use App\Model\DTOs\UserDTO;
 
 class UserRepository
@@ -18,7 +19,6 @@ class UserRepository
         }
         return [];
     }
-
     public function findByUsername(string $checkusername, string $userFilePath): UserDTO|array
     {
         $users = json_decode(file_get_contents($userFilePath), true);
@@ -29,5 +29,11 @@ class UserRepository
             }
         }
         return [];
+    }
+    public function fetchEventUsers($eventID): array
+    {
+        $db = new Database();
+        $query = "SELECT * FROM Event.Events WHERE ID = $eventID ";
+        return $db->select($query,[]);
     }
 }

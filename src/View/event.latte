@@ -7,10 +7,10 @@
 <body>
 <form action="/index.php" method="POST">
     <p><a href="http://localhost:8000/index.php">Event SignUp</a> -> Event Details</p>
-    <p>Event Name: {$event['name']}</p>
-    <p>Date: {$event['date']}</p>
-    <p>Description: {$event['desc']}</p>
-    <p>Joined/Max Participants: {$event['joinedPers']} / {$event['maxPers']}</p>
+    <p>Event Name: {$event['Name']}</p>
+    <p>Date: {$event['Date']}</p>
+    <p>Description: {$event['Description']}</p>
+    <p>Joined/Max Participants: {$event['Crnt_Ppl']} / {$event['Max_Ppl']}</p>
     {if $event['joinedUserUsernames']}
         <p>Joined Users:<br>
             {foreach $event['joinedUserUsernames'] as $userName}
@@ -21,12 +21,12 @@
 </form>
 
 {foreach $event["joinedUserUsernames"] as $users}
-        {if $users === $_SESSION['username']}
+        {if $users === $_SESSION['Username']}
             {var $joinedevent = true}
         {/if}
 {/foreach}
 
-{var $buttonid = $event['id']}
+{var $buttonid = $event['ID']}
 
 {if $joinedevent === true}
         <a href="?leaveevent={$buttonid}">Leave</a>

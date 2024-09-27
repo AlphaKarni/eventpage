@@ -8,7 +8,7 @@ use PDOException;
 class Database
 {
     private $db_host = '127.0.0.1';
-    private $db_name = 'event';
+    private $db_name = 'Event';
     private $db_username = 'root';
     private $db_password = 'nexus123';
     public function dbConnection()
@@ -26,24 +26,15 @@ class Database
         }
     }
 
-    public function select(string $sql, array $params = [])
+    public function select(string $query, array $params = [])
     {
-        $stmt = $this->dbConnection()->prepare($sql);
+        $stmt = $this->dbConnection()->prepare($query);
         $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
     public function executeDML(string $sql, array $params = []){
         $stmt = $this->dbConnection()->prepare($sql);
         return $stmt->execute($params);
     }
 
 }
-
-//$database = new Database();
-//$pdo = $database->dbConnection();
-//
-//$sql = "SELECT username FROM event.Users";
-//$stmt = $pdo->prepare($sql);
-//$stmt->execute();
-//print_r($stmt->fetchAll());
