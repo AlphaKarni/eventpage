@@ -24,16 +24,25 @@ class HomeController
     public function loadEventSignup(string $eventFilePath): void
     {
         $events = $this->eventRepository->fetchAllEvents();
+
+        foreach ($events as $event)
+        {
+            $participants = $this->eventRepository->fetchParticipants($event['id']);
+        }
+        var_dump($participants);
+
+
+        $participants = $this->database->select("SELECT username FROM Event.Users", []);
         $errors = [];
 
         if ($_SESSION["loggedIn"] === true) {
             if (isset($_GET["joinevent"])) {
-                $eventId = $_GET["joinevent"];
-                $this->eventEntityManager->joinEvent($events, $eventId, $eventFilePath);
+                $event = $events[$_GET["joinevent"]];
+                $this->eventEntityManager->joinEvent($event);
             }
             if (isset($_GET["leaveevent"])) {
-                $eventId = $_GET["leaveevent"];
-                $this->eventEntityManager->leaveEvent($events, $eventId, $eventFilePath);
+                $event = $events[$_GET["leaveevent"]];
+                $this->eventEntityManager->leaveEvent($event);
             }
         }
 
@@ -44,7 +53,6 @@ class HomeController
                 "Date" => $_POST["Date"],
                 "Description" => $_POST["Description"],
                 "MaxPeople" => $_POST["MaxPeople"],
-                "CrntPeople" => 0
             ];
 
             $eventDTO = $this->eventMapper->getEventDTO($validateEvent);
@@ -61,9 +69,10 @@ class HomeController
         {
             $event = $events[$_GET["details"]];
             $this->view->addParameter('event', $event);
-            $this->view->addParameter('event_id', $_GET["details"]);
+            $this->view->addParameter('participants', $participants);
             $this->view->addParameter('loggedIn', $_SESSION["loggedIn"]);
             $this->view->display(__DIR__ . '/../View/event.latte');
+            exit;
         }
         $this->view->addParameter('events', $events);
         $this->view->addParameter('errors', $errors);

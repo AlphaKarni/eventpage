@@ -8,7 +8,6 @@ class EventDTO
         public string $name,
         public string $date,
         public string $description,
-        public int $crntPeople,
         public int $maxPeople,
     ) {
     }

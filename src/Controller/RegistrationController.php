@@ -26,8 +26,8 @@ class RegistrationController
             $password = htmlspecialchars($_POST['password']);
 
             $luser= $this->userRepository->findByEmail($checkmail, $userFilePath);
-            $luseremail = $luser['email'];
-            $luserusername = $luser['username'];
+            $luseremail = $luser->email;
+            $luserusername = $luser->username;
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
             $user_data = [

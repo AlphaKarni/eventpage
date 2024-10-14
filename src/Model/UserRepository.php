@@ -33,7 +33,7 @@ class UserRepository
     public function fetchEventUsers($eventID): array
     {
         $db = new Database();
-        $query = "SELECT * FROM Event.Events WHERE ID = $eventID ";
+        $query = "SELECT * FROM Event.Events WHERE eventID = $eventID ";
         return $db->select($query,[]);
     }
 }

@@ -23,5 +23,10 @@
         "username": "123",
         "email": "123",
         "password": "$2y$10$uGCedRUA2RuHAhzWsh58z.cUE7HTxI2uf3wTRloI6J8wUd3wQpXmq"
+    },
+    {
+        "username": "5435",
+        "email": "5435",
+        "password": "$2y$10$uZ5eIRcwUibl1YMxlOShpeSGAFL5MfQ\/xBxawmIpBicbjiA4wMd0K"
     }
 ]

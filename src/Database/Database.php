@@ -21,7 +21,7 @@ class Database
         }
         catch(PDOException $e)
         {
-            echo "Connection error ".$e->getMessage();
+            echo "We've Been Trying To Reach You About Your Car's Extended Warranty ".$e->getMessage();
             exit;
         }
     }

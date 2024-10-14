@@ -2,24 +2,38 @@
 
 namespace App\Model;
 
+use App\Database\Database;
 use App\Model\DTOs\EventDTO;
 
 class EventEntityManager
 {
-    public function joinEvent(array $events, int $eevent, string $eventFilePath): void
+    public function joinEvent(array $event): void
     {
-        $events[$eevent]["joinedPers"]++;
-        $events[$eevent]["joinedUserUsernames"][] = $_SESSION["username"];
-        $this->saveEvents($events, $eventFilePath);
-        header('Location: /index.php?details=' . $eevent);
+        $db = new Database;
+        $eventid = $event['id'];
+
+        $crntPeople = $event['crntPeople'];
+        $crntPeople++;
+        $query = "UPDATE Event.Events SET crntPeople = $crntPeople WHERE eventID = $eventid";
+        $db->executeDML($query,[]);
+
+        $username = $_SESSION["username"];
+        $query = "INSERT INTO Event.Participants (eventID, username) VALUES ($eventid,'$username')";
+        $db->executeDML($query,[]);
     }
-    public function leaveEvent(array $events, int $eevent, string $eventFilePath): void
+    public function leaveEvent(array $event): void
     {
-        $events[$eevent]["joinedPers"]--;
-        $key = array_search($_SESSION["username"], $events[$eevent]["joinedUserUsernames"], true);
-        unset($events[$eevent]["joinedUserUsernames"][$key]);
-        $this->saveEvents($events, $eventFilePath);
-        header('Location: /index.php?details=' . $eevent);
+        $db = new Database;
+        $eventid = $event['id'];
+
+        $crntPeople = count($event['crntPeople']);
+        $crntPeople--;
+        $query = "UPDATE Event.Events SET crntPeople = $crntPeople WHERE eventID = $eventid";
+        $db->executeDML($query,[]);
+
+        $username = $_SESSION["username"];
+        $query = "DELETE FROM Event.Participants WHERE username = '$username' AND eventID = 'id'";
+        $db->executeDML($query,[]);
     }
     public function saveEvents(array $events, string $eventFilePath): void
     {

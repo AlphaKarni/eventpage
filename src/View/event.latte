@@ -7,30 +7,27 @@
 <body>
 <form action="/index.php" method="POST">
     <p><a href="http://localhost:8000/index.php">Event SignUp</a> -> Event Details</p>
-    <p>Event Name: {$event['Name']}</p>
-    <p>Date: {$event['Date']}</p>
-    <p>Description: {$event['Description']}</p>
-    <p>Joined/Max Participants: {$event['Crnt_Ppl']} / {$event['Max_Ppl']}</p>
-    {if $event['joinedUserUsernames']}
-        <p>Joined Users:<br>
-            {foreach $event['joinedUserUsernames'] as $userName}
-                {$userName}<br>
+    <p>Event Name: {$event['name']}</p>
+    <p>Date: {$event['date']}</p>
+    <p>Description: {$event['description']}</p>
+    <p>Joined/Max Participants: {$event['crntPeople']} / {$event['maxPeople']}</p>
+    <p>Joined Users:<br>
+            {foreach $participants[$event["id"]] as $username}
+                {$username}<br>
             {/foreach}
         </p>
-    {/if}
 </form>
 
-{foreach $event["joinedUserUsernames"] as $users}
-        {if $users === $_SESSION['Username']}
+{foreach $participants[$event["id"]] as $user}
+        {if $user === $_SESSION['username']}
             {var $joinedevent = true}
         {/if}
 {/foreach}
 
-{var $buttonid = $event['ID']}
-
 {if $joinedevent === true}
-        <a href="?leaveevent={$buttonid}">Leave</a>
-{else}  <a href="?joinevent={$buttonid}">Join!</a>
+        <a href="?leaveevent={$event["id"]}">Leave</a>
+{else}
+        <a href="?joinevent={$event["id"]}">Join!</a>
 {/if}
 
 </body>
