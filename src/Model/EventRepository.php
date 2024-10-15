@@ -1,20 +1,25 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Model;
 use App\Database\Database;
 
 class EventRepository
 {
+    public function __construct(
+        public Database $db,
+    ){}
     public function fetchAllEvents(): array
     {
-        $db = new Database();
         $query = "SELECT * FROM Event.Events";
-        return $db->select($query);
+        return $this->db->select($query);
+    }
+    public function fetchEvent($eventID): array
+    {
+        $query = "SELECT * FROM Event.Events WHERE eventID = '$eventID'";
+        return $this->db->select($query);
     }
     public function saveEvent($event): void
     {
-        $db = new Database();
         $query = "INSERT INTO Event.Events (name, date, description, maxPeople) VALUES (:name, :date, :description, :maxPeople)";
         $params =
             [
@@ -23,12 +28,6 @@ class EventRepository
                 ':description' => $event->description,
                 ':maxPeople' => $event->maxPeople,
             ];
-        $db->executeDML($query, $params);
-    }
-    public function fetchParticipants($eventID): array
-    {
-        $db = new Database();
-        $query = "SELECT * FROM Event.Participants WHERE eventID = '$eventID'";
-        return $db->select($query);
+        $this->db->executeDML($query, $params);
     }
 }

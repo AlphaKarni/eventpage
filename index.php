@@ -24,15 +24,20 @@ $page = $_GET['page'] ?? 'home';
 
 switch ($page) {
     case 'login':
-        $userRepository = new UserRepository();
+        $db = new Database();
+        $userMapper = new UserMapper;
+        $userRepository = new UserRepository($userMapper, $db);
         $controller = new LoginController($userRepository, $view);
-        $controller->loadLogin($userFilePath);
+        $controller->loadLogin();
         break;
 
     case 'register':
-        $userRepository = new UserRepository();
-        $userEntityManager = new UserEntityManager();
+
+
         $userMapper = new UserMapper();
+        $db = new Database();
+        $userEntityManager = new UserEntityManager($db);
+        $userRepository = new UserRepository($userMapper, $db);
         $controller = new RegistrationController($userRepository, $userEntityManager, $view, $userMapper);
         $controller->loadRegistration($userFilePath);
         break;
@@ -44,11 +49,14 @@ switch ($page) {
 
     default:
         $eventEntityManager = new EventEntityManager();
-        $eventRepository = new EventRepository();
+
         $eventValidation = new EventValidation();
         $eventMapper = new EventMapper();
         $db = new Database();
-        $controller = new HomeController($eventRepository, $eventEntityManager, $eventValidation, $view, $eventMapper,$db);
-        $controller->loadEventSignup($eventFilePath);
+        $userMapper = new UserMapper();
+        $eventRepository = new EventRepository($db);
+        $userRepository = new UserRepository($userMapper, $db);
+        $controller = new HomeController($eventRepository, $eventEntityManager, $eventValidation, $view, $eventMapper,$db, $userRepository);
+        $controller->loadEventSignup();
         break;
 }

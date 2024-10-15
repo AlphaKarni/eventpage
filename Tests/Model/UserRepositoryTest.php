@@ -17,13 +17,13 @@ class UserRepositoryTest extends TestCase
     {
         $userRepository = new UserRepository();
         $mail = "1";
-        $users = $userRepository->findByEmail($mail, $this->userFilePath);
+        $users = $userRepository->fetchByEmail($mail, $this->userFilePath);
         $this->assertEquals($mail, $users->email);
     }
     public function testFindByEmailfailed()
     {
         $userRepository = new UserRepository();
-        $users = $userRepository->findByEmail("notexistent", $this->userFilePath);
+        $users = $userRepository->fetchByEmail("notexistent", $this->userFilePath);
         $this->assertEmpty($users);
     }
 

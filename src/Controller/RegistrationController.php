@@ -17,17 +17,17 @@ class RegistrationController
     ) {
     }
 
-    public function loadRegistration(string $userFilePath): void
+    public function loadRegistration(): void
     {
+        $_SESSION["emailalreadyregistered"] = false;
+        $_SESSION["usernamealreadyregistered"] = false;
         if ($_SERVER["REQUEST_METHOD"] === "POST")
         {
             $checkusername = htmlspecialchars($_POST['username']);
             $checkmail = htmlspecialchars($_POST['email']);
             $password = htmlspecialchars($_POST['password']);
 
-            $luser= $this->userRepository->findByEmail($checkmail, $userFilePath);
-            $luseremail = $luser->email;
-            $luserusername = $luser->username;
+            $luser = $this->userRepository->fetchByEmail($checkmail);
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
             $user_data = [
@@ -36,17 +36,11 @@ class RegistrationController
                 'password' => $hashed_password
             ];
 
-
-            $userDTO = $this->userMapper->getUserDTO($user_data);
-
-            $_SESSION["emailalreadyregistered"] = !empty($luseremail);
-            $_SESSION["usernamealreadyregistered"] = !empty($luserusername);
+            $_SESSION["emailalreadyregistered"] = !empty($luser->email);
+            $_SESSION["usernamealreadyregistered"] = !empty($luser->username);
 
             if (!$_SESSION["emailalreadyregistered"] && !$_SESSION["usernamealreadyregistered"]) {
-                $users_json = file_get_contents($userFilePath);
-                $users = json_decode($users_json, true);
-                $users[] = $userDTO;
-                $this->userEntityManager->saveUsers($users, $userFilePath);
+                $this->userEntityManager->saveUser($user_data);
                 header('Location: /index.php?page=login');
             }
         }

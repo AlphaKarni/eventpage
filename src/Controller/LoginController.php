@@ -14,12 +14,12 @@ class LoginController
         public ViewInterface $view
     ) {}
 
-    public function loadLogin(string $userFilePath): void
+    public function loadLogin(): void
     {
         $_SESSION["loggedIn"] = false;
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $checkmail = htmlspecialchars($_POST['email']);
-            $luser = $this->userRepository->findByEmail($checkmail, $userFilePath);
+            $luser = $this->userRepository->fetchByEmail($checkmail);
             if (!empty($luser)) {
                 $password = $_POST['password'];
                 if (password_verify($password, $luser->password)) {
@@ -30,12 +30,10 @@ class LoginController
                     header('Location: /index.php');
                     exit();
                 } else {
-                    $perror = true;
-                    $this->view->addParameter('perror', $perror);
+                    $this->view->addParameter('perror', true);
                 }
             } else {
-                $eerror = true;
-                $this->view->addParameter('eerror', $eerror);
+                $this->view->addParameter('eerror', true);
             }
         }
 

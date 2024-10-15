@@ -1,11 +1,15 @@
 <?php declare(strict_types=1);
 
 namespace App\Model;
-
+use App\Database\Database;
 class UserEntityManager
+
 {
-    public function saveUsers(array $users, string $userFilePath): void
+    public function __construct
+    (public Database $db) {}
+    public function saveUser(array $user): void
     {
-        file_put_contents($userFilePath, json_encode($users, JSON_PRETTY_PRINT));
+        $query = "INSERT INTO Event.Users (username, email, password) VALUES (?, ?, ?)";
+        $this->db->select($query, [$user["username"], $user["email"], $user["password"]]);
     }
 }
