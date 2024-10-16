@@ -12,8 +12,7 @@ class EventMapper
             $events["Name"],
             $events["Date"],
             $events["Description"],
-            $events["CrntPeople"],
-            $events["MaxPeople"],
+            $events["MaxPeople"]
         );
     }
 }

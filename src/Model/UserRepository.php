@@ -12,26 +12,36 @@ class UserRepository
         public UserMapper $mapper,
         public Database $db
     ) {}
-    public function fetchByEmail(string $checkmail): UserDTO|false
+    public function fetchByEmail(string $checkMail): false|UserDTO
     {
-        $query = "SELECT * FROM Event.Users WHERE email = '$checkmail'";
+        $query = "SELECT * FROM Event.Users WHERE email = '$checkMail'";
         $luser = $this->db->select($query);
+        if (empty($luser[0]))
+        {
+            return false;
+        }
         return $this->mapper->getUserDTO($luser[0]);
     }
-    public function findByUsername(string $checkusername, string $userFilePath): UserDTO|array
-    {
-        $users = json_decode(file_get_contents($userFilePath), true);
-        foreach ($users as $luser) {
-            if ($luser['username'] === $checkusername) {
-                return new UserDTO($luser['username'],$luser['email'], $luser['password']);
-            }
+    public function fetchByUsername(string $checkUsername){
+        $query = "SELECT * FROM Event.Users WHERE username = '$checkUsername'";
+        $luser = $this->db->select($query);
+        if (empty($luser[0]))
+        {
+            return false;
         }
-        return [];
+        return $this->mapper->getUserDTO($luser[0]);
     }
-    public function fetchEventUsers($eventID): array
+    public function emailExists(string $checkMail): bool
     {
-        $query = "SELECT * FROM Event.Events WHERE eventID = ?";
-        return $this->db->select($query,[$eventID]);
+        $query = "SELECT * FROM Event.Users WHERE email = '$checkMail'";
+        $emailFound = $this->db->select($query);
+        return !empty($emailFound);
+    }
+    public function usernameExists(string $checkUsername): bool
+    {
+        $query = "SELECT * FROM Event.Users WHERE username = '$checkUsername'";
+        $usernameFound = $this->db->select($query);
+        return !empty($usernameFound);
     }
     public function fetchAllParticipants(): array
     {

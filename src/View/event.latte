@@ -10,27 +10,14 @@
     <p>Event Name: {$event['name']}</p>
     <p>Date: {$event['date']}</p>
     <p>Description: {$event['description']}</p>
-
-    {foreach $participants as $participant}
-        {if $participant["username"] === $_SESSION["username"] && $participant["eventID"] === $event["eventID"]}
-            {$joinedevent = true}
-        {/if}
-    {/foreach}
     <p>Joined/Max Participants: {count($participants)} / {$event['maxPeople']}</p>
     <p>Joined Users:<br>
-            {foreach $participants[$event["eventID"]] as $username}
-                {$username}<br>
+            {foreach $participants as $participant}
+                {$participant["username"]}<br>
             {/foreach}
-        </p>
+    </p>
 </form>
-
-{foreach $participants[$event["eventID"]] as $user}
-        {if $user === $_SESSION['username']}
-            {var $joinedevent = true}
-        {/if}
-{/foreach}
-
-{if $joinedevent === true}
+{if $joinedEvent === true}
         <a href="?leaveevent={$event["eventID"]}">Leave</a>
 {else}
         <a href="?joinevent={$event["eventID"]}">Join!</a>

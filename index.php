@@ -18,8 +18,6 @@ session_start();
 require_once __DIR__ . '/vendor/autoload.php';
 
 $view = new View();
-$eventFilePath = __DIR__ . '/events.json';
-$userFilePath = __DIR__ . '/user.json';
 $page = $_GET['page'] ?? 'home';
 
 switch ($page) {
@@ -39,7 +37,7 @@ switch ($page) {
         $userEntityManager = new UserEntityManager($db);
         $userRepository = new UserRepository($userMapper, $db);
         $controller = new RegistrationController($userRepository, $userEntityManager, $view, $userMapper);
-        $controller->loadRegistration($userFilePath);
+        $controller->loadRegistration();
         break;
 
     case 'logout':

@@ -42,13 +42,11 @@ class HomeController
                 $events[] = $eventDTO;
                 $this->eventRepository->saveEvent($eventDTO);
                 header('Location: /index.php?');
-            }
-            else
+            } else
             {
-                $errors = $result;
+                $this->view->addParameter('errors', $result);
             }
         }
-
         $events = $this->eventRepository->fetchAllEvents();
 
         if ($_SESSION["loggedIn"] === true)
@@ -70,17 +68,26 @@ class HomeController
         if (isset($_GET["details"]))
         {
             $event = $this->eventRepository->fetchEvent($_GET["details"]);
-            $this->view->addParameter('event', $event[0]);
+            $participants = $this->userRepository->fetchEventParticipants($event[0]["eventID"]);
 
-            $participants = $this->userRepository->fetchEventParticipants($event["eventID"]);
+            $joinedEvent = false;
+            foreach ($participants as $participant){
+                if ($participant["username"] === $_SESSION["username"]){
+                    $joinedEvent = true;
+                    break;
+                }
+            }
+
+            $this->view->addParameter('joinedEvent', $joinedEvent);
             $this->view->addParameter('participants', $participants);
-            var_dump($participants);
+
+            $this->view->addParameter('event', $event[0]);
             $this->view->display(__DIR__ . '/../View/event.latte');
             exit;
         }
 
-        $errors = [];
-        $this->view->addParameter('errors', $errors);
+
+
 
         $participants = $this->userRepository->fetchAllParticipants();
         $this->view->addParameter('participants', $participants);

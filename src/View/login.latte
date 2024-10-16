@@ -14,7 +14,9 @@
     {if $eerror === true}
         <p style='color:red'> Email not Found!</p>
     {/if}
-
+    {if $succregistration === true}
+    <p style='color:green'> Registration successful, you can now Login!</p>
+    {/if}
     <p><a href="http://localhost:8000/index.php">Event SignUp</a> -> Login</p>
 
     <label for="name">E-Mail:</label>

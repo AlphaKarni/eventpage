@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Core\ViewInterface;
+use App\Model\DTOs\UserDTO;
 use App\Model\UserRepository;
 use App\Model\UserEntityManager;
 use App\Model\Mapper\UserMapper;
@@ -19,29 +20,38 @@ class RegistrationController
 
     public function loadRegistration(): void
     {
-        $_SESSION["emailalreadyregistered"] = false;
-        $_SESSION["usernamealreadyregistered"] = false;
         if ($_SERVER["REQUEST_METHOD"] === "POST")
+
         {
             $checkusername = htmlspecialchars($_POST['username']);
-            $checkmail = htmlspecialchars($_POST['email']);
-            $password = htmlspecialchars($_POST['password']);
+            $usernamefound = $this->userRepository->usernameExists(htmlspecialchars($_POST['username']));
 
-            $luser = $this->userRepository->fetchByEmail($checkmail);
+            $checkmail = htmlspecialchars($_POST['email']);
+            $emailfound = $this->userRepository->emailExists($checkmail);
+
+            $password = htmlspecialchars($_POST['password']);
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            $user_data = [
-                'username' => $checkusername,
-                'email' => $checkmail,
-                'password' => $hashed_password
-            ];
+            $user_data = $this->userMapper->getUserArray($checkusername, $checkmail, $hashed_password);
 
-            $_SESSION["emailalreadyregistered"] = !empty($luser->email);
-            $_SESSION["usernamealreadyregistered"] = !empty($luser->username);
+            $this->userMapper->getUserDTO($user_data);
 
-            if (!$_SESSION["emailalreadyregistered"] && !$_SESSION["usernamealreadyregistered"]) {
+            if (!$emailfound && !$usernamefound)
+            {
                 $this->userEntityManager->saveUser($user_data);
+
+                $this->view->addParameter('succregistration', true);
+
                 header('Location: /index.php?page=login');
+            } else {
+                if ($emailfound)
+                {
+                    $this->view->addParameter('emailfound', true);
+                }
+                if ($usernamefound)
+                {
+                    $this->view->addParameter('usernamefound', true);
+                }
             }
         }
         $this->view->display(__DIR__ . '/../View/user.latte');

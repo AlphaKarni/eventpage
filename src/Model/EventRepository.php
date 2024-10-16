@@ -20,7 +20,7 @@ class EventRepository
     }
     public function saveEvent($event): void
     {
-        $query = "INSERT INTO Event.Events (name, date, description, maxPeople) VALUES (:name, :date, :description, :maxPeople)";
+        $query = "INSERT INTO Event.Events (name, date, description, maxPeople) VALUES (?, ?, ?, ?)";
         $params =
             [
                 ':name' => $event->name,

@@ -42,7 +42,7 @@ class LoginControllerTest extends TestCase
             'password' => $hashedPassword
         ];
 
-        $this->userRepositoryMock->method('fetchByEmail')->willReturn($userData);
+        $this->userRepositoryMock->method('emailExists')->willReturn($userData);
 
         $this->controller->loadLogin($this->userFilePath);
 
@@ -64,7 +64,7 @@ class LoginControllerTest extends TestCase
             'password' => $hashedPassword
         ];
 
-        $this->userRepositoryMock->method('fetchByEmail')->willReturn($userData);
+        $this->userRepositoryMock->method('emailExists')->willReturn($userData);
 
         $this->controller->loadLogin($this->userFilePath);
 
@@ -79,7 +79,7 @@ class LoginControllerTest extends TestCase
         $_POST['email'] = 'unknown@example.com';
         $_POST['password'] = 'anyPassword';
 
-        $this->userRepositoryMock->method('fetchByEmail')->willReturn([]);
+        $this->userRepositoryMock->method('emailExists')->willReturn([]);
 
         $this->controller->loadLogin($this->userFilePath);
 
